@@ -6,7 +6,7 @@
     if(!document.querySelector('link[href="./customer-services.css"]')){const l=document.createElement('link');l.rel='stylesheet';l.href='./customer-services.css';document.head.appendChild(l)}
     const $=id=>document.getElementById(id);
     const notify=msg=>window.notify?window.notify(msg):console.log(msg);
-    const serviceAsset={taxi:'taxi.svg',private:'private.svg',delivery:'delivery.svg',cargo:'cargo.svg',intercity:'intercity.svg'};
+    const serviceAsset={taxi:'taxi.svg',private:'private-photo.svg',delivery:'delivery-photo.svg',cargo:'cargo.svg',intercity:'intercity.svg'};
     const serviceTitle={taxi:'تفاصيل رحلة التكسي',private:'تفاصيل السيارة الخصوصي',delivery:'تفاصيل التوصيل',cargo:'تفاصيل الحمل',intercity:'تفاصيل السفر'};
     const serviceDesc={taxi:'حدد عدد الركاب وأي ملاحظة مهمة للسائق.',private:'رحلة خصوصية وراحة مع معلومات الركاب.',delivery:'بيانات المستلم والطلب والتحصيل عند التسليم.',cargo:'اشرح الحمولة حتى تصل عروض من سواق الحمل المناسبين.',intercity:'معلومات الركاب والحقائب للرحلات الطويلة.'};
     let current='taxi';
