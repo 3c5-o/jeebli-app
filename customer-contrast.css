@@ -1,0 +1,71 @@
+/* JEEBLI Customer Contrast & Readability Pass */
+:root{
+  --bg:#f2f6fa;
+  --surface:#ffffff;
+  --surface2:#f6f9fc;
+  --text:#0a182b;
+  --muted:#53657a;
+  --line:#d8e1ea;
+  --blue:#145fbd;
+  --blue2:#0f78b8;
+  --teal:#0d8f68;
+  --teal2:#12a878;
+  --danger:#bd3545;
+  --warn:#a96608;
+}
+body{color:var(--text)}
+/* Global readable copy */
+p,small,.muted,.auth-copy>p:last-child,.header-location small,.service-card small,.active-request-head p,.request-card-foot small,.notification-card p,.notification-card time,.copyright-card,.customer-v2-card p,.v2-sheet-head p,.v2-result small,.v2-empty,.v2-event small,.v2-contact div small,.v2-receipt-row small,.j-polish-card p,.j-pref-copy small,.j-service-card-head p,.j-help,.v3-live-title small,.v3-status-head p,.v3-driver-copy p,.v3-fare small,.v3-driver-meta small,.v3-route-row small,.v3-section-title small,.v3-empty-chat,.v3-saved-place small{color:var(--muted)}
+/* Inputs */
+input,textarea,select{color:#0b1b30!important}
+input::placeholder,textarea::placeholder{color:#78889a!important;opacity:1}
+.auth-form input,.stack-form input,.stack-form textarea,.stack-form select,.location-inputs input,.customer-v2-card select,.customer-v2-card input,.v2-sheet select,.v2-sheet input,.v2-sheet textarea,.j-service-card input,.j-service-card select,.j-service-card textarea,.v3-chat-compose input,.v3-rating-box textarea{background:#fff!important;border-color:#cfd9e4!important;color:#0b1b30!important}
+.auth-form label,.stack-form label,.customer-v2-card label,.v2-sheet label,.j-service-card label{color:#2f4156!important}
+/* Base cards */
+.auth-card,.service-card,.request-card,.notification-card,.address-card,.settings-card,.menu-card,.copyright-card,.customer-v2-card,.j-polish-card,.j-service-card,.v3-driver-card,.v3-route-card,.v3-chat-card,.v3-status-card{border-color:#d4dee8!important}
+.service-card,.quick-card,.filter-chip,.menu-card button,.request-card,.notification-card,.customer-v2-card,.j-polish-card,.j-service-card{color:#102033}
+/* Buttons and controls */
+.quick-card{color:#334a62!important}
+.filter-chip{color:#445970!important}
+.filter-chip.active{color:#fff!important;background:#145fbd!important;border-color:#145fbd!important}
+.btn-soft{background:#e8f2ff!important;color:#124f98!important;border-color:#c5daf1!important}
+.btn-soft.active{background:#d6e9ff!important;color:#0d447f!important;border-color:#78a9dc!important}
+.status-pill{background:#e7f1ff!important;color:#154f91!important}
+.request-card-foot button,.j-rebook-btn,.v3-repeat-btn{background:#e8f1ff!important;color:#124f98!important}
+.text-action,.v2-forgot{color:#145fbd!important}
+/* Banners / profile */
+.feature-banner{background:linear-gradient(135deg,#0c4f9f,#0b7b5d)!important}
+.feature-banner p{color:#eef8ff!important}
+.profile-hero{background:linear-gradient(135deg,#0e5aa9,#0b8a64)!important}
+.profile-hero p{color:#f0f8ff!important}.member-badge{color:#fff!important;background:rgba(3,21,39,.16)}
+/* Bottom nav */
+.nav-btn{color:#687b90!important}.nav-btn.active{color:#0f5caf!important;background:#e5f1ff!important}
+/* Customer v2 */
+.v2-pill-btn{background:#e7f0ff!important;color:#1358a8!important}.v2-pill-btn.dark{background:#0a1d33!important;color:#fff!important}.v2-pill-btn.gold{background:#fff0c7!important;color:#754d05!important}.v2-pill-btn.danger{background:#ffe7ea!important;color:#a82736!important}
+.v2-location-search{background:#f3f7fb!important;color:#1d3e60!important;border-color:#cedae6!important}
+.v2-area-badge{background:#e6f1ff!important;color:#13559e!important}
+.v2-msg{color:#15263a}.v2-msg.mine{background:#145fbd!important;color:#fff!important}
+.v2-tag{color:#263a50}.v2-tag.active{background:#e7f1ff!important;color:#13559e!important}
+.v2-safety-hero p{color:#e6eef7!important}
+/* Live ride */
+.v3-live{background:#eef3f8!important;color:#0a182b!important}.v3-live-body{background:#f4f7fa!important}.v3-live-launcher small{color:#e5eef8!important}
+.v3-map-badge{background:rgba(5,20,36,.94)!important;color:#fff!important}.v3-map-badge.stale{background:#8f3e16!important;color:#fff!important}
+.v3-eta{background:#081b31!important;color:#fff!important}.v3-eta small{color:#e3edf8!important}
+.v3-action{background:#e3edf8!important;color:#123f6e!important}.v3-action.dark{background:#081b31!important;color:#fff!important}.v3-action.gold{background:#ffefc2!important;color:#6b4600!important}
+.v3-quick button{background:#f3f7fb!important;color:#244968!important;border-color:#cedae5!important}
+.v3-mini-msg{background:#e9eef4!important;color:#203246!important}.v3-mini-msg.mine{background:#d9eaff!important;color:#0f4f8f!important}
+.v3-saved-mode button{background:#dde6ef!important;color:#3c586f!important}.v3-saved-mode button.on{background:#103c68!important;color:#fff!important}
+.v3-complete p{color:#edf5fc!important}
+/* Service-specific */
+.j-service-note{background:#e8f3ff!important;color:#214f73!important}.j-service-chip{background:#e6eef7!important;color:#274b67!important}.j-help{color:#607286!important}.j-cod-box{background:#fff4d8!important;border-color:#e4c77a!important;color:#4b3a13}.j-service-warning{background:#ffe8ea!important;color:#942c39!important}
+/* Notification preferences */
+.j-notif-status{background:#edf2f7!important;color:#3f566f!important}.j-notif-status.ok{background:#e4f5ec!important;color:#17613e!important}.j-notif-status.warn{background:#fff0d5!important;color:#7d4d07!important}
+/* Cancel dialog */
+.j-cancel-panel{color:#102033}.j-cancel-panel p{color:#53657a!important}.j-cancel-options button{color:#24394f!important;border-color:#d2dce6!important}.j-cancel-back{background:#e8edf3!important;color:#24394f!important}.j-cancel-confirm{background:#b93645!important;color:#fff!important}
+/* Readability helpers */
+.kicker{color:#0f5fb8!important}.empty-state{color:#53657a!important}.empty-state strong{color:#17283b}.copyright-card p{color:#65768a!important}
+button:disabled{opacity:.52!important;cursor:not-allowed}
+@media (prefers-contrast:more){
+  :root{--muted:#3f5166;--line:#bdcad6}
+  .service-card,.request-card,.notification-card,.customer-v2-card,.j-polish-card,.j-service-card{border-width:1.5px}
+}
