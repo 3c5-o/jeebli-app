@@ -34,7 +34,8 @@
       if(existing){if(onload)existing.addEventListener('load',onload,{once:true});return existing}
       const s=document.createElement('script');s.src=src;s.async=false;if(onload)s.addEventListener('load',onload,{once:true});document.body.appendChild(s);return s;
     };
-    const loadFinal=()=>loadScript('./customer-final.js');
+    const loadMedia=()=>loadScript('./customer-media.js');
+    const loadFinal=()=>loadScript('./customer-final.js',loadMedia);
     const loadMobileFixes=()=>loadScript('./customer-mobile-fixes.js',loadFinal);
     const loadServiceImages=()=>loadScript('./customer-service-images.js',loadMobileFixes);
     const loadHomeV2=()=>loadScript('./customer-home-v2.js',loadServiceImages);
@@ -66,6 +67,7 @@
       if(!document.querySelector('script[src="./customer-service-images.js"]'))loadServiceImages();
       if(!document.querySelector('script[src="./customer-mobile-fixes.js"]'))loadMobileFixes();
       if(!document.querySelector('script[src="./customer-final.js"]'))loadFinal();
+      if(!document.querySelector('script[src="./customer-media.js"]'))loadMedia();
     },1800);
   });
 })();
