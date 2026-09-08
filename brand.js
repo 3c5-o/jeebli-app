@@ -2,7 +2,7 @@
   const ready=fn=>document.readyState==='loading'?document.addEventListener('DOMContentLoaded',fn,{once:true}):fn();
   ready(()=>{
     if(!document.querySelector('link[href="./brand.css"]')){const l=document.createElement('link');l.rel='stylesheet';l.href='./brand.css';document.head.appendChild(l)}
-    const mark='./assets/brand/mark.svg';
+    const mark='./assets/brand/app-icon.svg';
     ['.splash-logo','.brand-logo','.brand-mark','.admin-logo','.splash-mark'].forEach(sel=>document.querySelectorAll(sel).forEach(el=>{el.innerHTML=`<img src="${mark}" alt="جيبلي" />`}));
     const authCopy=document.querySelector('.auth-copy');if(authCopy&&!authCopy.querySelector('.jeebli-auth-hero')){const img=document.createElement('img');img.className='jeebli-auth-hero';img.src='./assets/brand/hero.svg';img.alt='جيبلي للنقل والتوصيل';authCopy.appendChild(img)}
     const asset={taxi:'taxi.svg',private:'private.svg',delivery:'delivery.svg',cargo:'cargo.svg',intercity:'intercity.svg'};
