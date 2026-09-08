@@ -1,7 +1,7 @@
-const CACHE='jeebli-customer-v14';
+const CACHE='jeebli-customer-v15';
 const CORE=[
   './','./index.html','./styles.css','./brand.css','./customer-v2.css','./customer-v3.css','./customer-services.css','./customer-avatar.css','./customer-polish.css','./customer-contrast.css',
-  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js','./customer-launch.js','./customer-avatar.js','./customer-addresses.js','./customer-system-notify.js','./customer-polish.js','./customer-ux.js',
+  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js','./customer-launch.js','./customer-avatar.js','./customer-addresses.js','./customer-system-notify.js','./customer-polish.js','./customer-ux.js','./customer-push.js',
   './manifest.webmanifest','./assets/brand/mark.svg','./assets/brand/hero.svg',
   './assets/services/taxi.svg','./assets/services/private.svg','./assets/services/delivery.svg','./assets/services/cargo.svg','./assets/services/intercity.svg'
 ];
@@ -33,6 +33,24 @@ self.addEventListener('fetch',event=>{
     }).catch(()=>cached||new Response('Offline',{status:503,statusText:'Offline'}));
     return cached||network;
   }));
+});
+self.addEventListener('push',event=>{
+  let data={};
+  try{data=event.data?.json()||{}}catch{data={body:event.data?.text()||'لديك تحديث جديد في جيبلي'}}
+  const title=data.title||'جيبلي | JEEBLI';
+  const options={
+    body:data.body||'لديك تحديث جديد في جيبلي',
+    icon:data.icon||'./assets/brand/mark.svg',
+    badge:data.badge||'./assets/brand/mark.svg',
+    tag:data.tag||`jeebli-${Date.now()}`,
+    renotify:true,
+    dir:'rtl',
+    lang:'ar',
+    vibrate:[180,80,180],
+    data:{url:data.url||'./?action=notifications',notificationId:data.id||null,type:data.type||null},
+    actions:[{action:'open',title:'فتح جيبلي'}]
+  };
+  event.waitUntil(self.registration.showNotification(title,options));
 });
 self.addEventListener('notificationclick',event=>{
   event.notification.close();
