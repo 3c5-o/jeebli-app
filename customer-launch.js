@@ -1,5 +1,8 @@
 (()=>{
   if(/(?:admin|driver)\.html$/i.test(location.pathname))return;
+  if(!document.querySelector('script[src="./customer-avatar.js"]')){
+    const avatar=document.createElement('script');avatar.src='./customer-avatar.js';avatar.async=false;document.body.appendChild(avatar);
+  }
   const params=new URLSearchParams(location.search),action=params.get('action');
   if(!action)return;
   const run=()=>{
