@@ -1,0 +1,23 @@
+name: Check Jeebli Driver
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'driver.js'
+      - 'driver.html'
+      - 'driver.css'
+      - '.github/workflows/driver-check.yml'
+  pull_request:
+    paths:
+      - 'driver.js'
+      - 'driver.html'
+      - 'driver.css'
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check driver JavaScript syntax
+        run: node --check driver.js
