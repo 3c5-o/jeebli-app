@@ -48,7 +48,8 @@
         }
 
         const reg=await navigator.serviceWorker.ready;
-        const {data:vapidKey,error:keyError}=await db.rpc('get_push_public_key');
+        const {data:config,error:keyError}=await db.from('app_public_config').select('value').eq('key','vapid_public_key').maybeSingle();
+        const vapidKey=config?.value;
         if(keyError||!vapidKey)throw new Error('تعذر تحميل مفتاح الإشعارات');
 
         let sub=await reg.pushManager.getSubscription();
@@ -59,19 +60,29 @@
         if(!json?.keys?.p256dh||!json?.keys?.auth)throw new Error('اشتراك الإشعارات غير مكتمل');
         currentDeviceKey=sub.endpoint;
         const token=JSON.stringify({endpoint:sub.endpoint,expirationTime:json.expirationTime||null,keys:json.keys});
-        const {error:registerError}=await db.rpc('register_push_device',{
-          p_device_key:sub.endpoint,
-          p_token:token,
-          p_platform:'web',
-          p_provider:'webpush',
-          p_device_name:deviceName()
-        });
+        const {error:registerError}=await db.from('push_devices').upsert({
+          user_id:user.id,
+          platform:'web',
+          provider:'webpush',
+          token,
+          device_key:sub.endpoint,
+          device_name:deviceName(),
+          is_active:true,
+          last_seen_at:new Date().toISOString(),
+          last_error:null
+        },{onConflict:'user_id,device_key'});
         if(registerError)throw registerError;
         paint('ready');
         if(showFeedback){
           notify('تم تفعيل الإشعارات الفعلية على هذا الجهاز');
-          const {data:sent}=await db.rpc('send_push_test');
-          if(sent)notify('راح يوصلك إشعار اختبار من جيبلي الآن');
+          const {error:testError}=await db.from('notifications').insert({
+            user_id:user.id,
+            type:'push_test',
+            title:'جيبلي جاهز 🔔',
+            body:'تم تفعيل الإشعارات الفعلية على هذا الجهاز.',
+            data:{url:'./?action=notifications'}
+          });
+          if(!testError)notify('راح يوصلك إشعار اختبار من جيبلي الآن');
         }
       }catch(err){
         console.error('Jeebli push setup failed',err);
@@ -86,7 +97,7 @@
         const reg=await navigator.serviceWorker.ready;
         const sub=await reg.pushManager.getSubscription();
         const key=currentDeviceKey||sub?.endpoint;
-        if(key)await db.rpc('deactivate_push_device',{p_device_key:key});
+        if(key)await db.from('push_devices').update({is_active:false,last_seen_at:new Date().toISOString()}).eq('user_id',user.id).eq('device_key',key);
       }catch{}
     }
 
