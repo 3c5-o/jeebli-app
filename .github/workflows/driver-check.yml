@@ -52,6 +52,7 @@ jobs:
           node --check customer-mobile-fixes.js
           node --check customer-final.js
           node --check customer-media.js
+          node --check customer-completion.js
           node --check sw.js
           node --check brand.js
           node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8')); console.log('manifest ok')"
