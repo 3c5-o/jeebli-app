@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>جيبلي سائق | JEEBLI Driver</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <link rel="stylesheet" href="./driver.css" />
+</head>
+<body>
+  <div id="driverSplash" class="driver-splash">
+    <div class="splash-mark">ج</div>
+    <h1>جيبلي سائق</h1>
+    <p>طلباتك، عروضك، ورحلاتك بمكان واحد</p>
+  </div>
+
+  <main class="driver-shell">
+    <section id="driverAuth" class="auth-screen hidden">
+      <div class="auth-brand">
+        <div class="brand-mark">ج</div>
+        <div><span>JEEBLI DRIVER</span><h1>جيبلي سائق</h1></div>
+      </div>
+      <div class="auth-hero">
+        <p class="eyebrow">بوابة السائق</p>
+        <h2>استلم الطلبات، قدّم سعرك، وابدأ رحلتك.</h2>
+        <p>الدخول متاح فقط للسائقين الذين تم تفعيلهم أو دعوتهم من إدارة جيبلي.</p>
+      </div>
+      <div class="auth-card">
+        <div class="segmented">
+          <button class="seg active" data-auth-tab="login">دخول السائق</button>
+          <button class="seg" data-auth-tab="activate">تفعيل دعوة</button>
+        </div>
+        <form id="driverLoginForm" class="auth-form active">
+          <label>البريد الإلكتروني<input id="driverLoginEmail" type="email" required placeholder="driver@example.com" /></label>
+          <label>كلمة المرور<input id="driverLoginPassword" type="password" minlength="6" required placeholder="••••••••" /></label>
+          <button class="btn primary" type="submit">دخول</button>
+        </form>
+        <form id="driverActivateForm" class="auth-form">
+          <label>الاسم الكامل<input id="driverSignupName" type="text" required placeholder="اسم السائق" /></label>
+          <label>رقم الهاتف<input id="driverSignupPhone" type="tel" required placeholder="07xxxxxxxxx" /></label>
+          <label>البريد المدعو<input id="driverSignupEmail" type="email" required placeholder="نفس البريد الذي أضافته الإدارة" /></label>
+          <label>كلمة المرور<input id="driverSignupPassword" type="password" minlength="6" required placeholder="6 أحرف أو أكثر" /></label>
+          <button class="btn primary" type="submit">إنشاء حساب السائق</button>
+          <small class="form-note">إذا لم يكن البريد مدعواً من الإدارة فلن يحصل الحساب على صلاحية سائق.</small>
+        </form>
+      </div>
+      <a class="back-customer" href="./index.html">العودة إلى تطبيق العميل</a>
+    </section>
+
+    <section id="driverApp" class="driver-app hidden">
+      <header class="driver-header">
+        <div class="driver-identity">
+          <div id="driverAvatar" class="driver-avatar">ج</div>
+          <div><small>أهلاً،</small><strong id="driverName">سائق جيبلي</strong></div>
+        </div>
+        <div class="availability-wrap">
+          <span id="availabilityLabel">غير متصل</span>
+          <label class="switch"><input id="availabilityToggle" type="checkbox" /><i></i></label>
+        </div>
+      </header>
+
+      <section id="driverSuspended" class="blocked-card hidden">
+        <i data-lucide="shield-alert"></i>
+        <h2>الحساب موقوف</h2>
+        <p>لا يمكنك استقبال الطلبات حالياً. راجع إدارة جيبلي أو الدعم.</p>
+        <button id="blockedLogoutBtn" class="btn soft">تسجيل الخروج</button>
+      </section>
+
+      <div id="driverPages" class="driver-pages">
+        <section id="driver-page-home" class="driver-page active">
+          <section class="map-card">
+            <div id="driverMap" class="driver-map"></div>
+            <div class="map-overlay">
+              <span id="gpsState"><i data-lucide="navigation"></i> الموقع غير مفعّل</span>
+              <button id="locateDriverBtn"><i data-lucide="locate-fixed"></i></button>
+            </div>
+          </section>
+
+          <section class="stats-grid">
+            <article><span>رحلات اليوم</span><strong id="todayTrips">0</strong><i data-lucide="route"></i></article>
+            <article><span>قيمة اليوم</span><strong id="todayGross">0 د.ع</strong><i data-lucide="banknote"></i></article>
+            <article><span>التقييم</span><strong id="driverRating">5.0</strong><i data-lucide="star"></i></article>
+          </section>
+
+          <section id="activeRideBanner" class="active-ride-banner hidden"></section>
+
+          <div class="section-head">
+            <div><p class="eyebrow">طلبات مباشرة</p><h2>طلبات قريبة ومتاحة</h2></div>
+            <button id="refreshOpenRequests" class="icon-action"><i data-lucide="refresh-cw"></i></button>
+          </div>
+          <div id="openRequestsList" class="stack-list"></div>
+        </section>
+
+        <section id="driver-page-offers" class="driver-page">
+          <div class="page-title"><p class="eyebrow">عروضك</p><h1>العروض والتفاوض</h1><p>تابع الأسعار التي قدمتها ورد على عروض العملاء المقابلة.</p></div>
+          <div id="myOffersList" class="stack-list"></div>
+        </section>
+
+        <section id="driver-page-active" class="driver-page">
+          <div class="page-title"><p class="eyebrow">الرحلة الحالية</p><h1>متابعة الطلب</h1></div>
+          <div id="activeRideView"></div>
+        </section>
+
+        <section id="driver-page-earnings" class="driver-page">
+          <div class="page-title"><p class="eyebrow">أرقامك</p><h1>الرحلات والأرباح</h1><p>القيم أدناه هي إجمالي أسعار الرحلات المتفق عليها وليست صافي أرباح بعد أي عمولة مستقبلية.</p></div>
+          <section class="earnings-grid">
+            <article><small>اليوم</small><strong id="earnToday">0 د.ع</strong></article>
+            <article><small>آخر 7 أيام</small><strong id="earnWeek">0 د.ع</strong></article>
+            <article><small>كل الرحلات</small><strong id="earnAll">0 د.ع</strong></article>
+          </section>
+          <div class="section-head"><h2>السجل</h2></div>
+          <div id="driverHistoryList" class="stack-list"></div>
+        </section>
+
+        <section id="driver-page-account" class="driver-page">
+          <div class="page-title"><p class="eyebrow">حساب السائق</p><h1>ملفي</h1></div>
+          <section class="profile-card">
+            <div id="accountDriverAvatar" class="big-avatar">ج</div>
+            <div><h2 id="accountDriverName">سائق جيبلي</h2><p id="accountDriverPhone">—</p><span id="verifiedBadge" class="verified-badge">قيد التحقق</span></div>
+          </section>
+          <section class="vehicle-card">
+            <div class="section-head"><h2>المركبة</h2><i data-lucide="car-front"></i></div>
+            <div class="vehicle-grid">
+              <div><small>النوع</small><strong id="vehicleType">—</strong></div>
+              <div><small>المركبة</small><strong id="vehicleName">—</strong></div>
+              <div><small>اللون</small><strong id="vehicleColor">—</strong></div>
+              <div><small>اللوحة</small><strong id="vehiclePlate">—</strong></div>
+            </div>
+            <p class="muted">تعديل بيانات المركبة والتحقق يتم من لوحة الإدارة.</p>
+          </section>
+          <div class="menu-card">
+            <button id="driverSupportBtn"><i data-lucide="life-buoy"></i><span>الدعم والمساعدة</span><i data-lucide="chevron-left"></i></button>
+            <button id="driverLogoutBtn" class="danger"><i data-lucide="log-out"></i><span>تسجيل الخروج</span></button>
+          </div>
+        </section>
+      </div>
+
+      <nav class="driver-nav">
+        <button class="driver-nav-btn active" data-driver-page="home"><i data-lucide="house"></i><span>الرئيسية</span></button>
+        <button class="driver-nav-btn" data-driver-page="offers"><i data-lucide="badge-dollar-sign"></i><span>عروضي</span></button>
+        <button class="driver-nav-btn" data-driver-page="active"><i data-lucide="navigation"></i><span>رحلتي</span><b id="activeNavDot" class="nav-dot hidden"></b></button>
+        <button class="driver-nav-btn" data-driver-page="earnings"><i data-lucide="wallet-cards"></i><span>الأرباح</span></button>
+        <button class="driver-nav-btn" data-driver-page="account"><i data-lucide="user-round"></i><span>حسابي</span></button>
+      </nav>
+    </section>
+  </main>
+
+  <section id="offerSheet" class="sheet hidden">
+    <div class="sheet-panel">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head"><div><small>عرض جديد</small><h2>قدّم سعرك للعميل</h2></div><button data-close-sheet="offerSheet"><i data-lucide="x"></i></button></div>
+      <div id="offerRideSummary" class="mini-route"></div>
+      <form id="offerForm" class="stack-form">
+        <input id="offerRideId" type="hidden" />
+        <label>السعر المقترح بالدينار العراقي<input id="offerFare" type="number" min="1" step="250" required placeholder="مثال: 6000" /></label>
+        <label>وقت الوصول التقريبي بالدقائق<input id="offerEta" type="number" min="1" max="240" required placeholder="مثال: 5" /></label>
+        <label>ملاحظة اختيارية<textarea id="offerNote" rows="3" placeholder="مثال: قريب منك وأوصل خلال دقائق"></textarea></label>
+        <div class="agreement-note"><i data-lucide="hand-coins"></i><span>ماكو تسعير بالكيلومتر. هذا السعر هو عرض منك ويمكن للعميل قبوله أو التفاوض عليه.</span></div>
+        <button class="btn primary" type="submit">إرسال العرض</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="supportSheet" class="sheet hidden">
+    <div class="sheet-panel">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head"><div><small>جيبلي</small><h2>دعم السائق</h2></div><button data-close-sheet="supportSheet"><i data-lucide="x"></i></button></div>
+      <form id="driverSupportForm" class="stack-form">
+        <label>العنوان<input id="driverSupportSubject" required placeholder="شنو المشكلة؟" /></label>
+        <label>التفاصيل<textarea id="driverSupportMessage" rows="5" required placeholder="اكتب تفاصيل المشكلة"></textarea></label>
+        <button class="btn primary" type="submit">إرسال للدعم</button>
+      </form>
+    </div>
+  </section>
+
+  <div id="driverToast" class="toast hidden"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./config.js"></script>
+  <script src="./driver.js"></script>
+</body>
+</html>
