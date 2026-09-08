@@ -7,17 +7,27 @@ on:
       - 'driver.js'
       - 'driver.html'
       - 'driver.css'
+      - 'driver-ui-patch.js'
+      - 'admin-driver-patch.js'
+      - 'config.js'
       - '.github/workflows/driver-check.yml'
   pull_request:
     paths:
       - 'driver.js'
       - 'driver.html'
       - 'driver.css'
+      - 'driver-ui-patch.js'
+      - 'admin-driver-patch.js'
+      - 'config.js'
 
 jobs:
   syntax:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check driver JavaScript syntax
-        run: node --check driver.js
+      - name: Check JavaScript syntax
+        run: |
+          node --check driver.js
+          node --check driver-ui-patch.js
+          node --check admin-driver-patch.js
+          node --check config.js
