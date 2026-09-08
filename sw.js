@@ -1,7 +1,7 @@
-const CACHE='jeebli-customer-v12';
+const CACHE='jeebli-customer-v13';
 const CORE=[
   './','./index.html','./styles.css','./brand.css','./customer-v2.css','./customer-v3.css','./customer-services.css','./customer-avatar.css','./customer-polish.css',
-  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js','./customer-launch.js','./customer-avatar.js','./customer-addresses.js','./customer-polish.js',
+  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js','./customer-launch.js','./customer-avatar.js','./customer-addresses.js','./customer-system-notify.js','./customer-polish.js',
   './manifest.webmanifest','./assets/brand/mark.svg','./assets/brand/hero.svg',
   './assets/services/taxi.svg','./assets/services/private.svg','./assets/services/delivery.svg','./assets/services/cargo.svg','./assets/services/intercity.svg'
 ];
@@ -32,5 +32,14 @@ self.addEventListener('fetch',event=>{
       return response;
     }).catch(()=>cached||new Response('Offline',{status:503,statusText:'Offline'}));
     return cached||network;
+  }));
+});
+self.addEventListener('notificationclick',event=>{
+  event.notification.close();
+  const target=new URL(event.notification.data?.url||'./?action=requests',self.registration.scope).href;
+  event.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(list=>{
+    const existing=list.find(c=>c.url.startsWith(self.registration.scope));
+    if(existing){existing.navigate(target);return existing.focus()}
+    return self.clients.openWindow(target);
   }));
 });
