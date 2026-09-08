@@ -1,24 +1,20 @@
-name: Check Jeebli Driver
+name: Check Jeebli Frontend
 
 on:
   push:
     branches: [main]
     paths:
-      - 'driver.js'
-      - 'driver.html'
-      - 'driver.css'
-      - 'driver-ui-patch.js'
-      - 'admin-driver-patch.js'
-      - 'config.js'
+      - '*.js'
+      - '*.html'
+      - '*.css'
+      - 'assets/**'
       - '.github/workflows/driver-check.yml'
   pull_request:
     paths:
-      - 'driver.js'
-      - 'driver.html'
-      - 'driver.css'
-      - 'driver-ui-patch.js'
-      - 'admin-driver-patch.js'
-      - 'config.js'
+      - '*.js'
+      - '*.html'
+      - '*.css'
+      - 'assets/**'
 
 jobs:
   syntax:
@@ -27,7 +23,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check JavaScript syntax
         run: |
+          node --check app.js
           node --check driver.js
+          node --check admin.js
+          node --check config.js
+          node --check tracking.js
           node --check driver-ui-patch.js
           node --check admin-driver-patch.js
-          node --check config.js
+          node --check admin-areas.js
+          node --check customer-areas.js
+          node --check brand.js
