@@ -34,7 +34,8 @@
       if(existing){if(onload)existing.addEventListener('load',onload,{once:true});return existing}
       const s=document.createElement('script');s.src=src;s.async=false;if(onload)s.addEventListener('load',onload,{once:true});document.body.appendChild(s);return s;
     };
-    const loadLaunch=()=>loadScript('./customer-launch.js');
+    const loadPolish=()=>loadScript('./customer-polish.js');
+    const loadLaunch=()=>loadScript('./customer-launch.js',loadPolish);
     const loadServices=()=>loadScript('./customer-services.js',loadLaunch);
     const loadBridge=()=>loadScript('./customer-v3-bridge.js',loadServices);
     const loadV3=()=>loadScript('./customer-v3.js',loadBridge);
@@ -44,6 +45,7 @@
       if(!document.querySelector('script[src="./customer-v3-bridge.js"]'))loadBridge();
       if(!document.querySelector('script[src="./customer-services.js"]'))loadServices();
       if(!document.querySelector('script[src="./customer-launch.js"]'))loadLaunch();
+      if(!document.querySelector('script[src="./customer-polish.js"]'))loadPolish();
     },1800);
   });
 })();
