@@ -21,6 +21,11 @@ window.JEEBLI_CONFIG={SUPABASE_URL:'https://fsofjhsnttsoyyvoidnd.supabase.co',SU
 window.addEventListener('DOMContentLoaded',()=>{
   const load=src=>{const s=document.createElement('script');s.src=src;s.defer=true;document.body.appendChild(s)};
   load('./tracking.js');
-  if(/\/admin\.html$/i.test(location.pathname))load('./admin-driver-patch.js');
+  load('./brand.js');
+  if(/\/admin\.html$/i.test(location.pathname)){
+    load('./admin-driver-patch.js');
+    load('./admin-areas.js');
+  }
   if(/\/driver\.html$/i.test(location.pathname))load('./driver-ui-patch.js');
+  if(!/\/(?:admin|driver)\.html$/i.test(location.pathname))load('./customer-areas.js');
 });
