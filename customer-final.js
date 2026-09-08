@@ -18,8 +18,10 @@
   }
 
   function loadCss(){
-    if(document.querySelector('link[href="./customer-final.css"]'))return;
-    const l=document.createElement('link');l.rel='stylesheet';l.href='./customer-final.css';document.head.appendChild(l);
+    ['./customer-final.css','./customer-v1-hotfix.css'].forEach(href=>{
+      if(document.querySelector(`link[href="${href}"]`))return;
+      const l=document.createElement('link');l.rel='stylesheet';l.href=href;document.head.appendChild(l);
+    });
   }
 
   function visibleModal(){
@@ -96,7 +98,7 @@
   function watchBookingSteps(){
     const panel=document.querySelector('#bookingSheet .booking-sheet-panel');if(!panel)return;
     const steps=[...document.querySelectorAll('#bookingSheet .booking-step')];
-    const scrollStart=()=>requestAnimationFrame(()=>{panel.scrollTo({top:0,behavior:'smooth'});window.bookingMap?.invalidateSize?.()});
+    const scrollStart=()=>requestAnimationFrame(()=>panel.scrollTo({top:0,behavior:'smooth'}));
     const ob=new MutationObserver(m=>{if(m.some(x=>x.attributeName==='class'))scrollStart()});
     steps.forEach(s=>ob.observe(s,{attributes:true,attributeFilter:['class']}));
     document.getElementById('bookingSheet')?.addEventListener('touchmove',()=>{}, {passive:true});
