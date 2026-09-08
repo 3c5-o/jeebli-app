@@ -32,4 +32,5 @@ jobs:
           node --check admin-driver-patch.js
           node --check admin-areas.js
           node --check customer-areas.js
+          node --check customer-v2.js
           node --check brand.js
