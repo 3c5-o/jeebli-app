@@ -2,13 +2,16 @@
   if(/(?:admin|driver)\.html$/i.test(location.pathname))return;
   const IMAGES={
     taxi:'https://a.top4top.io/p_39037ruz91.jpg',
-    private:'https://b.top4top.io/p_3903uole11.jpg',
-    delivery:'https://d.top4top.io/p_3903w8nwl1.jpg',
+    private:'./assets/services/private-photo.svg',
+    delivery:'./assets/services/delivery-photo.svg',
     cargo:'https://e.top4top.io/p_39031nwfb1.jpg',
     starex:'https://f.top4top.io/p_3903d2ibm1.jpg',
     intercity:'https://c.top4top.io/p_3903gu3zr1.jpg'
   };
-  const FALLBACK={taxi:'./assets/services/taxi.svg',private:'./assets/services/private.svg',delivery:'./assets/services/delivery.svg',cargo:'./assets/services/cargo.svg',starex:'./assets/services/private.svg',intercity:'./assets/services/intercity.svg'};
+  const FALLBACK={
+    taxi:'./assets/services/taxi.svg',private:'./assets/services/private-photo.svg',delivery:'./assets/services/delivery-photo.svg',
+    cargo:'./assets/services/cargo.svg',starex:'./assets/services/private.svg',intercity:'./assets/services/intercity.svg'
+  };
   const PRIMARY=['taxi','private','delivery','cargo','starex'];
   const ready=fn=>document.readyState==='loading'?document.addEventListener('DOMContentLoaded',fn,{once:true}):fn();
 
@@ -35,8 +38,8 @@
     img.alt=label(code);
     img.loading=code==='taxi'?'eager':'lazy';
     img.decoding='async';
-    img.referrerPolicy='no-referrer';
-    img.onerror=()=>{if(img.dataset.fallback==='1')return;img.dataset.fallback='1';img.src=FALLBACK[code]||'./assets/brand/mark.svg'};
+    if(/^https?:/i.test(img.src))img.referrerPolicy='no-referrer';
+    img.onerror=()=>{if(img.dataset.fallback==='1')return;img.dataset.fallback='1';img.src=FALLBACK[code]||'./assets/brand/app-icon.svg'};
     return img;
   }
 
@@ -63,9 +66,9 @@
     box.querySelectorAll('[data-booking-service]').forEach(card=>{
       const code=card.dataset.bookingService;if(!IMAGES[code])return;
       card.classList.add('jl-booking-photo-service');
-      if(!card.querySelector('.jl-booking-photo')){
-        const wrap=document.createElement('span');wrap.className='jl-booking-photo';wrap.appendChild(makeImage(code,'jl-booking-photo-img'));card.prepend(wrap)
-      }
+      let wrap=card.querySelector('.jl-booking-photo');
+      if(!wrap){wrap=document.createElement('span');wrap.className='jl-booking-photo';wrap.appendChild(makeImage(code,'jl-booking-photo-img'));card.prepend(wrap)}
+      else if(!wrap.querySelector('img'))wrap.appendChild(makeImage(code,'jl-booking-photo-img'));
       card.querySelector('.service-icon')?.setAttribute('aria-hidden','true');
     });
   }
