@@ -9,7 +9,7 @@
     const phoneLabel=phone?.closest('label');if(phoneLabel)phoneLabel.insertAdjacentElement('afterend',wrap);else form.prepend(wrap);
     const district=document.getElementById('signupDistrict'),sub=document.getElementById('signupSubdistrict'),village=document.getElementById('signupVillage');
     let areas=[];
-    const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+    const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]));
     const options=(rows,placeholder)=>`<option value="">${placeholder}</option>`+rows.map(a=>`<option value="${a.id}">${esc(a.name_ar)}</option>`).join('');
     function fillDistricts(){const rows=areas.filter(a=>a.area_type==='district'&&!a.parent_id);district.innerHTML=options(rows,'اختر القضاء');const sharqat=rows.find(a=>a.code==='sharqat');if(sharqat){district.value=sharqat.id;fillSubdistricts()}}
     function fillSubdistricts(){const rows=areas.filter(a=>a.parent_id===district.value&&a.area_type==='subdistrict');sub.innerHTML=options(rows,'اختر الناحية / المركز');village.innerHTML='<option value="">اختر الناحية أولاً</option>';if(rows.length===1){sub.value=rows[0].id;fillVillages()}}
@@ -29,8 +29,12 @@
       if(authData.session){window.notify?.('تم إنشاء حسابك وربط منطقتك');if(typeof window.showApp==='function')await window.showApp(authData.user)}else window.notify?.('تم إنشاء الحساب. افتح بريدك لتأكيده ثم سجل الدخول.');
     },true);
 
-    if(!document.querySelector('script[src="./customer-v2.js"]')){
-      const s=document.createElement('script');s.src='./customer-v2.js';s.defer=true;document.body.appendChild(s);
-    }
+    const loadScript=(src)=>{
+      if(document.querySelector(`script[src="${src}"]`))return null;
+      const s=document.createElement('script');s.src=src;s.async=false;document.body.appendChild(s);return s;
+    };
+    const v2=document.querySelector('script[src="./customer-v2.js"]')||loadScript('./customer-v2.js');
+    const loadV3=()=>loadScript('./customer-v3.js');
+    if(v2){v2.addEventListener('load',loadV3,{once:true});setTimeout(()=>{if(!document.querySelector('script[src="./customer-v3.js"]')&&typeof window.supabase!=='undefined')loadV3()},1800)}else loadV3();
   });
 })();
