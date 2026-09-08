@@ -9,7 +9,7 @@
     const phoneLabel=phone?.closest('label');if(phoneLabel)phoneLabel.insertAdjacentElement('afterend',wrap);else form.prepend(wrap);
     const district=document.getElementById('signupDistrict'),sub=document.getElementById('signupSubdistrict'),village=document.getElementById('signupVillage');
     let areas=[];
-    const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]));
+    const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
     const options=(rows,placeholder)=>`<option value="">${placeholder}</option>`+rows.map(a=>`<option value="${a.id}">${esc(a.name_ar)}</option>`).join('');
     function fillDistricts(){const rows=areas.filter(a=>a.area_type==='district'&&!a.parent_id);district.innerHTML=options(rows,'اختر القضاء');const sharqat=rows.find(a=>a.code==='sharqat');if(sharqat){district.value=sharqat.id;fillSubdistricts()}}
     function fillSubdistricts(){const rows=areas.filter(a=>a.parent_id===district.value&&a.area_type==='subdistrict');sub.innerHTML=options(rows,'اختر الناحية / المركز');village.innerHTML='<option value="">اختر الناحية أولاً</option>';if(rows.length===1){sub.value=rows[0].id;fillVillages()}}
@@ -34,7 +34,8 @@
       if(existing){if(onload)existing.addEventListener('load',onload,{once:true});return existing}
       const s=document.createElement('script');s.src=src;s.async=false;if(onload)s.addEventListener('load',onload,{once:true});document.body.appendChild(s);return s;
     };
-    const loadPolish=()=>loadScript('./customer-polish.js');
+    const loadUX=()=>loadScript('./customer-ux.js');
+    const loadPolish=()=>loadScript('./customer-polish.js',loadUX);
     const loadLaunch=()=>loadScript('./customer-launch.js',loadPolish);
     const loadAddresses=()=>loadScript('./customer-addresses.js',loadLaunch);
     const loadAvatar=()=>loadScript('./customer-avatar.js',loadAddresses);
@@ -50,6 +51,7 @@
       if(!document.querySelector('script[src="./customer-addresses.js"]'))loadAddresses();
       if(!document.querySelector('script[src="./customer-launch.js"]'))loadLaunch();
       if(!document.querySelector('script[src="./customer-polish.js"]'))loadPolish();
+      if(!document.querySelector('script[src="./customer-ux.js"]'))loadUX();
     },1800);
   });
 })();
