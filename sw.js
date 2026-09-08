@@ -1,7 +1,7 @@
-const CACHE='jeebli-customer-v21';
+const CACHE='jeebli-customer-v22';
 const CORE=[
-  './','./index.html','./styles.css','./brand.css','./customer-v2.css','./customer-v3.css','./customer-services.css','./customer-avatar.css','./customer-polish.css','./customer-contrast.css','./customer-lux.css','./customer-home-v2.css','./customer-service-images.css','./customer-mobile-fixes.css',
-  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js','./customer-starex.js','./customer-launch.js','./customer-avatar.js','./customer-addresses.js','./customer-system-notify.js','./customer-polish.js','./customer-ux.js','./customer-push.js','./customer-lux.js','./customer-home-v2.js','./customer-service-images.js','./customer-mobile-fixes.js',
+  './','./index.html','./styles.css','./brand.css','./customer-v2.css','./customer-v3.css','./customer-services.css','./customer-avatar.css','./customer-polish.css','./customer-contrast.css','./customer-lux.css','./customer-home-v2.css','./customer-service-images.css','./customer-mobile-fixes.css','./customer-final.css','./customer-v1-hotfix.css','./customer-media.css',
+  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js','./customer-starex.js','./customer-launch.js','./customer-avatar.js','./customer-addresses.js','./customer-system-notify.js','./customer-polish.js','./customer-ux.js','./customer-push.js','./customer-lux.js','./customer-home-v2.js','./customer-service-images.js','./customer-mobile-fixes.js','./customer-final.js','./customer-media.js',
   './manifest.webmanifest','./assets/brand/mark.svg','./assets/brand/hero.svg','./assets/brand/app-icon.svg',
   './assets/services/taxi.svg','./assets/services/private.svg','./assets/services/delivery.svg','./assets/services/cargo.svg','./assets/services/intercity.svg','./assets/services/private-photo.svg','./assets/services/delivery-photo.svg'
 ];
