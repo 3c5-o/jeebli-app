@@ -28,5 +28,9 @@
       if(authError){window.notify?.(authError.message);return}
       if(authData.session){window.notify?.('تم إنشاء حسابك وربط منطقتك');if(typeof window.showApp==='function')await window.showApp(authData.user)}else window.notify?.('تم إنشاء الحساب. افتح بريدك لتأكيده ثم سجل الدخول.');
     },true);
+
+    if(!document.querySelector('script[src="./customer-v2.js"]')){
+      const s=document.createElement('script');s.src='./customer-v2.js';s.defer=true;document.body.appendChild(s);
+    }
   });
 })();
