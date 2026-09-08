@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0B1020" />
+  <title>جيبلي | JEEBLI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">منصة جيبلي</p>
+        <h1>كل ما تحتاجه.. أقرب إليك</h1>
+      </div>
+      <button id="logoutBtn" class="icon-btn hidden" aria-label="تسجيل الخروج">↪</button>
+    </header>
+
+    <main>
+      <section id="authView" class="panel auth-panel">
+        <div class="brand-mark">J</div>
+        <h2>أهلاً بك في جيبلي</h2>
+        <p class="muted">سجّل دخولك أو أنشئ حسابك حتى تقدر تطلب رحلتك وتتابعها مباشرة.</p>
+
+        <div class="tabs">
+          <button class="tab active" data-tab="login">تسجيل الدخول</button>
+          <button class="tab" data-tab="signup">إنشاء حساب</button>
+        </div>
+
+        <form id="loginForm" class="form active-form">
+          <label>البريد الإلكتروني
+            <input id="loginEmail" type="email" placeholder="name@example.com" required />
+          </label>
+          <label>كلمة المرور
+            <input id="loginPassword" type="password" placeholder="••••••••" minlength="6" required />
+          </label>
+          <button class="primary-btn" type="submit">دخول</button>
+        </form>
+
+        <form id="signupForm" class="form">
+          <label>الاسم الكامل
+            <input id="signupName" type="text" placeholder="مثال: حمد" required />
+          </label>
+          <label>رقم الهاتف
+            <input id="signupPhone" type="tel" placeholder="07xxxxxxxxx" required />
+          </label>
+          <label>البريد الإلكتروني
+            <input id="signupEmail" type="email" placeholder="name@example.com" required />
+          </label>
+          <label>كلمة المرور
+            <input id="signupPassword" type="password" placeholder="6 أحرف أو أكثر" minlength="6" required />
+          </label>
+          <button class="primary-btn" type="submit">إنشاء الحساب</button>
+        </form>
+      </section>
+
+      <section id="appView" class="hidden">
+        <section class="hero-card">
+          <div>
+            <p class="eyebrow">مرحباً، <span id="userName">مستخدم جيبلي</span></p>
+            <h2>وين تريد تروح اليوم؟</h2>
+          </div>
+          <div class="status-pill">متصل</div>
+        </section>
+
+        <section class="services-grid">
+          <button class="service-card selected" data-service="taxi"><span>🚕</span><strong>تكسي</strong><small>رحلة يومية</small></button>
+          <button class="service-card" data-service="private"><span>🚘</span><strong>خصوصي</strong><small>سيارة مميزة</small></button>
+          <button class="service-card" data-service="delivery"><span>📦</span><strong>توصيل</strong><small>طرود وطلبات</small></button>
+          <button class="service-card" data-service="intercity"><span>🛣️</span><strong>بين المحافظات</strong><small>رحلات بعيدة</small></button>
+        </section>
+
+        <section class="panel booking-panel">
+          <div class="section-title-row">
+            <div><p class="eyebrow">طلب جديد</p><h3>حدد رحلتك</h3></div>
+            <button id="useLocationBtn" class="ghost-btn" type="button">📍 موقعي</button>
+          </div>
+
+          <form id="rideForm" class="form compact-form">
+            <label>موقع الانطلاق
+              <input id="pickupAddress" type="text" placeholder="مثال: الشرقاط - السوق" required />
+            </label>
+            <div class="coords-grid">
+              <input id="pickupLat" type="number" step="any" placeholder="خط العرض" required />
+              <input id="pickupLng" type="number" step="any" placeholder="خط الطول" required />
+            </div>
+
+            <label>الوجهة
+              <input id="destinationAddress" type="text" placeholder="مثال: المستشفى العام" required />
+            </label>
+            <div class="coords-grid">
+              <input id="destinationLat" type="number" step="any" placeholder="خط العرض" required />
+              <input id="destinationLng" type="number" step="any" placeholder="خط الطول" required />
+            </div>
+
+            <label>ملاحظات اختيارية
+              <textarea id="rideNotes" rows="3" placeholder="أي تفاصيل تساعد السائق"></textarea>
+            </label>
+
+            <button class="primary-btn" type="submit">اطلب جيبلي الآن</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="section-title-row">
+            <div><p class="eyebrow">رحلاتي</p><h3>آخر الطلبات</h3></div>
+            <button id="refreshRidesBtn" class="ghost-btn" type="button">تحديث</button>
+          </div>
+          <div id="ridesList" class="rides-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
