@@ -34,7 +34,8 @@
       if(existing){if(onload)existing.addEventListener('load',onload,{once:true});return existing}
       const s=document.createElement('script');s.src=src;s.async=false;if(onload)s.addEventListener('load',onload,{once:true});document.body.appendChild(s);return s;
     };
-    const loadUX=()=>loadScript('./customer-ux.js');
+    const loadPush=()=>loadScript('./customer-push.js');
+    const loadUX=()=>loadScript('./customer-ux.js',loadPush);
     const loadPolish=()=>loadScript('./customer-polish.js',loadUX);
     const loadLaunch=()=>loadScript('./customer-launch.js',loadPolish);
     const loadAddresses=()=>loadScript('./customer-addresses.js',loadLaunch);
@@ -52,6 +53,7 @@
       if(!document.querySelector('script[src="./customer-launch.js"]'))loadLaunch();
       if(!document.querySelector('script[src="./customer-polish.js"]'))loadPolish();
       if(!document.querySelector('script[src="./customer-ux.js"]'))loadUX();
+      if(!document.querySelector('script[src="./customer-push.js"]'))loadPush();
     },1800);
   });
 })();
