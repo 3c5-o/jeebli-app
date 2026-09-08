@@ -27,5 +27,8 @@ window.addEventListener('DOMContentLoaded',()=>{
     load('./admin-areas.js');
   }
   if(/\/driver\.html$/i.test(location.pathname))load('./driver-ui-patch.js');
-  if(!/\/(?:admin|driver)\.html$/i.test(location.pathname))load('./customer-areas.js');
+  if(!/\/(?:admin|driver)\.html$/i.test(location.pathname)){
+    load('./customer-areas.js');
+    load('./customer-completion.js');
+  }
 });
