@@ -34,9 +34,14 @@
       if(existing){if(onload)existing.addEventListener('load',onload,{once:true});return existing}
       const s=document.createElement('script');s.src=src;s.async=false;if(onload)s.addEventListener('load',onload,{once:true});document.body.appendChild(s);return s;
     };
-    const loadBridge=()=>loadScript('./customer-v3-bridge.js');
+    const loadServices=()=>loadScript('./customer-services.js');
+    const loadBridge=()=>loadScript('./customer-v3-bridge.js',loadServices);
     const loadV3=()=>loadScript('./customer-v3.js',loadBridge);
     loadScript('./customer-v2.js',loadV3);
-    setTimeout(()=>{if(!document.querySelector('script[src="./customer-v3.js"]'))loadV3();else if(!document.querySelector('script[src="./customer-v3-bridge.js"]'))loadBridge()},1800);
+    setTimeout(()=>{
+      if(!document.querySelector('script[src="./customer-v3.js"]'))loadV3();
+      if(!document.querySelector('script[src="./customer-v3-bridge.js"]'))loadBridge();
+      if(!document.querySelector('script[src="./customer-services.js"]'))loadServices();
+    },1800);
   });
 })();
