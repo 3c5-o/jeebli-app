@@ -1,0 +1,9 @@
+/* JEEBLI customer media attachments */
+.j-media-box{margin-top:10px;padding:12px;border-radius:17px;background:rgba(255,255,255,.045);border:1px dashed rgba(233,185,73,.34)}
+.j-media-box strong{display:block;color:#f8fbff!important;font-size:12px;margin-bottom:3px}.j-media-box small{display:block;color:#c2cfdd!important;font-size:9px;line-height:1.7;margin-bottom:9px}
+.j-media-pick{width:100%;min-height:46px;border:1px solid rgba(233,185,73,.25);border-radius:14px;background:#0b2034;color:#ffe08a;display:flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-weight:900;font-size:11px;cursor:pointer}
+.j-media-pick input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}.j-media-pick svg{width:18px}
+.j-media-list{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.j-media-chip{display:inline-flex;align-items:center;gap:5px;max-width:100%;background:#132c45;color:#dfe9f2;border-radius:999px;padding:6px 9px;font-size:9px;border:1px solid rgba(255,255,255,.08)}.j-media-chip span{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.j-media-chip button{border:0;background:transparent;color:#ff9ba3;font-size:14px;line-height:1;padding:0 2px}
+.j-media-progress{margin-top:7px;color:#ffe08a;font-size:9px;font-weight:800}.j-media-progress.hidden{display:none!important}
+#supportForm .j-media-box{margin:4px 0 2px;background:#0b2034}
+@media(max-width:360px){.j-media-chip span{max-width:110px}}
