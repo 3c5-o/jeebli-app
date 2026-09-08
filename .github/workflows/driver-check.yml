@@ -35,4 +35,5 @@ jobs:
           node --check customer-v2.js
           node --check customer-v3.js
           node --check customer-v3-bridge.js
+          node --check customer-services.js
           node --check brand.js
