@@ -1,0 +1,34 @@
+/* Final Android touch/contrast hotfix — loaded after customer-final.css */
+body.jl-modal-open{overflow:hidden!important;touch-action:pan-y!important;overscroll-behavior:none!important}
+#bookingSheet.sheet{touch-action:pan-y!important;overscroll-behavior:contain!important}
+#bookingSheet .booking-sheet-panel,#bookingSheet .booking-step.active{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important}
+#bookingSheet .booking-sheet-panel{overflow-y:auto!important;scroll-behavior:smooth!important}
+
+/* Never let old light-theme variables wash text into navy backgrounds */
+#bookingSheet *,#page-account *,#page-more *,#page-requests *,#page-notifications *{text-shadow:none}
+#bookingSheet h1,#bookingSheet h2,#bookingSheet h3,#bookingSheet h4,#bookingSheet strong,
+#page-account h1,#page-account h2,#page-account h3,#page-more h1,#page-more h2,#page-more h3,
+#page-requests h1,#page-requests h2,#page-requests h3,#page-notifications h1,#page-notifications h2,#page-notifications h3{color:#f8fbff!important}
+#bookingSheet p,#bookingSheet small,#bookingSheet .j-help,#bookingSheet .customer-v2-card p,
+#page-account p,#page-account small,#page-more p,#page-more small,#page-requests p,#page-requests small,#page-notifications p,#page-notifications small{color:#c4d1de!important}
+#bookingSheet label,#bookingSheet .j-service-card label,#bookingSheet .customer-v2-card label{color:#eef4fa!important}
+#bookingSheet input,#bookingSheet textarea,#bookingSheet select{color:#fff!important;background:#081b2d!important}
+#bookingSheet input::placeholder,#bookingSheet textarea::placeholder{color:#aebfd0!important}
+
+/* GPS feedback */
+.jl-geo-hint{margin:10px 14px 0;padding:10px 12px;border-radius:15px;background:#10263d;color:#eaf1f8;border:1px solid rgba(233,185,73,.2);font-size:10px;font-weight:700;line-height:1.7;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.jl-geo-hint.ok{border-color:rgba(45,199,132,.38);color:#bff1d8}.jl-geo-hint.error{border-color:rgba(255,107,119,.42);color:#ffd3d8}
+.jl-geo-busy{opacity:.65!important;pointer-events:none!important}
+
+/* Install chip remains above map controls and is readable */
+.jl-install-fab{color:#ffe08a!important;background:rgba(7,21,36,.96)!important;border-color:rgba(233,185,73,.45)!important}
+.jl-install-fab span{color:#ffe08a!important}
+
+/* Keep page scrolling all the way above the fixed nav */
+body:not(.jl-modal-open) .app-view{padding-bottom:calc(100px + env(safe-area-inset-bottom))!important}
+body:not(.jl-modal-open) .pages-wrap{padding-bottom:calc(118px + env(safe-area-inset-bottom))!important}
+
+@media(max-height:720px){
+  #bookingSheet .booking-sheet-panel{height:var(--jl-vvh,100dvh)!important;max-height:var(--jl-vvh,100dvh)!important}
+  #bookingSheet .sheet-footer{position:sticky!important;bottom:0!important}
+}
