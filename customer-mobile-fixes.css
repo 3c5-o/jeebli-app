@@ -1,0 +1,90 @@
+/* JEEBLI mobile viewport + booking fit pass */
+:root{--jl-safe-bottom:max(12px,env(safe-area-inset-bottom));--jl-safe-top:max(0px,env(safe-area-inset-top))}
+html,body{width:100%;max-width:100%;overflow-x:hidden!important}
+body{min-height:100dvh;overscroll-behavior-y:none}
+.app-shell,.app-view{width:100%!important;max-width:560px!important;min-height:100dvh!important}
+
+/* Full mobile booking sheet: never taller than the visual viewport */
+#bookingSheet.sheet{padding:0!important;align-items:flex-end!important;overflow:hidden!important}
+#bookingSheet .booking-sheet-panel{width:min(100%,560px)!important;height:min(92dvh,820px)!important;max-height:calc(100dvh - var(--jl-safe-top))!important;min-height:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;padding:10px 14px 0!important;border-radius:28px 28px 0 0!important;background:linear-gradient(180deg,#0e2942 0%,#071827 100%)!important;box-shadow:0 -18px 55px rgba(0,0,0,.42)!important}
+#bookingSheet .sheet-handle,#bookingSheet .sheet-top,#bookingSheet .stepper{flex:0 0 auto!important}
+#bookingSheet .sheet-top{padding:2px 0 8px!important;min-height:62px!important}
+#bookingSheet .sheet-top h2{font-size:clamp(24px,7vw,36px)!important;line-height:1.2!important;margin:0!important}
+#bookingSheet .sheet-top small{font-size:10px!important}
+#bookingSheet .round-btn{width:46px!important;height:46px!important;border-radius:16px!important}
+#bookingSheet .stepper{margin:4px 0 12px!important;gap:6px!important;padding:0 2px!important}
+#bookingSheet .step{min-width:50px!important}.stepper>i{min-width:18px!important;height:2px!important}
+#bookingSheet .step b{width:42px!important;height:42px!important;font-size:16px!important}
+#bookingSheet .step span{font-size:9px!important;margin-top:5px!important;white-space:nowrap!important}
+
+#bookingSheet .booking-step{display:none!important;flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding:2px 1px 18px!important;scrollbar-width:none!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important}
+#bookingSheet .booking-step::-webkit-scrollbar{display:none!important}
+#bookingSheet .booking-step.active{display:block!important}
+#bookingSheet .booking-step>h3{font-size:clamp(22px,6vw,31px)!important;line-height:1.35!important;margin:8px 2px 16px!important}
+
+/* Service step */
+#bookingSheet .booking-services{display:grid!important;grid-template-columns:1fr!important;gap:9px!important;padding-bottom:8px!important}
+#bookingSheet .booking-service{width:100%!important;min-height:94px!important;border-radius:22px!important;padding:10px 12px!important;display:flex!important;align-items:center!important;gap:12px!important;overflow:hidden!important;text-align:right!important}
+#bookingSheet .jl-booking-photo{width:88px!important;height:72px!important;min-width:88px!important;border-radius:18px!important}
+#bookingSheet .jl-booking-photo-img{object-fit:cover!important}
+#bookingSheet .booking-service strong{font-size:18px!important;display:block!important}.booking-service small{font-size:11px!important;line-height:1.6!important}
+
+/* Location step */
+#bookingSheet .location-inputs{display:grid!important;gap:8px!important}
+#bookingSheet .location-inputs label{min-height:60px!important;border-radius:18px!important;padding:0 13px!important}
+#bookingSheet .location-inputs input{font-size:15px!important;min-width:0!important}
+#bookingSheet .location-actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;margin:10px 0!important;overflow:visible!important}
+#bookingSheet .location-actions .btn{min-width:0!important;width:100%!important;padding:10px 5px!important;border-radius:14px!important;font-size:10px!important;white-space:normal!important;line-height:1.25!important}
+#bookingSheet .booking-map{height:clamp(220px,34dvh,340px)!important;min-height:220px!important;max-height:340px!important;border-radius:22px!important}
+#bookingSheet .route-info{margin:9px 0 0!important;border-radius:16px!important;padding:10px 12px!important;gap:8px!important;flex-wrap:wrap!important;font-size:10px!important}
+
+/* Detail step */
+#bookingSheet .booking-details-form{gap:11px!important;padding-bottom:8px!important}
+#bookingSheet .booking-details-form label{font-size:12px!important}
+#bookingSheet .booking-details-form select,#bookingSheet .booking-details-form input,#bookingSheet .booking-details-form textarea{min-height:52px!important;border-radius:17px!important;font-size:14px!important}
+#bookingSheet .j-service-card,#bookingSheet .customer-v2-card{margin:10px 0!important;border-radius:22px!important;padding:14px!important;max-width:100%!important;overflow:hidden!important}
+#bookingSheet .j-service-card-head img{width:72px!important;height:62px!important;border-radius:16px!important;object-fit:cover!important}
+#bookingSheet .j-counter{width:100%!important;max-width:100%!important}
+
+/* Sticky footer remains visible above Android/browser controls */
+#bookingSheet .sheet-footer{position:relative!important;z-index:50!important;flex:0 0 auto!important;margin:0 -14px!important;padding:10px 14px calc(10px + var(--jl-safe-bottom))!important;background:linear-gradient(180deg,rgba(7,24,39,.9),#071827 34%)!important;border-top:1px solid rgba(233,185,73,.18)!important;box-shadow:0 -12px 30px rgba(0,0,0,.22)!important;display:grid!important;grid-template-columns:minmax(104px,.72fr) minmax(0,1.55fr)!important;gap:9px!important}
+#bookingSheet .sheet-footer .btn{min-height:54px!important;border-radius:18px!important;font-size:18px!important;width:100%!important}
+#bookingSheet .sheet-footer .btn.hidden{display:none!important}
+#bookingSheet .sheet-footer .btn-primary:only-child{grid-column:1/-1!important}
+
+/* Areas / search cards inside booking should follow the dark theme, not jump to white */
+#bookingSheet .customer-v2-card,#bookingSheet .v2-location-search{background:#0b2033!important;color:#eef4fb!important;border-color:rgba(255,255,255,.11)!important}
+#bookingSheet .customer-v2-card h3,#bookingSheet .customer-v2-card label{color:#f5f8fc!important}
+#bookingSheet .customer-v2-card p{color:#aab9c9!important}
+#bookingSheet .customer-v2-card select,#bookingSheet .customer-v2-card input{background:#071827!important;color:#fff!important;border-color:rgba(255,255,255,.12)!important}
+#bookingSheet .v2-location-search{color:#f3f6fa!important}
+
+/* Install action on home */
+.jl-install-fab{position:absolute;z-index:670;right:14px;bottom:18px;min-height:46px;border:1px solid rgba(233,185,73,.4);border-radius:17px;background:rgba(7,21,36,.94);color:#ffe08a;display:flex;align-items:center;gap:8px;padding:6px 11px 6px 8px;box-shadow:0 10px 24px rgba(0,0,0,.24);font:inherit;font-size:10px;font-weight:900;backdrop-filter:blur(14px)}
+.jl-install-fab img{width:30px;height:30px;border-radius:9px;object-fit:cover}.jl-install-fab.hidden{display:none!important}
+
+/* Splash / auth local icon */
+.splash-logo img,.brand-logo img{width:100%!important;height:100%!important;object-fit:cover!important;display:block!important}
+
+@media(max-height:760px){
+  #bookingSheet .booking-sheet-panel{height:96dvh!important;border-radius:24px 24px 0 0!important}
+  #bookingSheet .sheet-top{min-height:52px!important}#bookingSheet .sheet-top h2{font-size:25px!important}
+  #bookingSheet .stepper{margin-bottom:8px!important}#bookingSheet .step b{width:36px!important;height:36px!important;font-size:14px!important}
+  #bookingSheet .step span{font-size:8px!important}
+  #bookingSheet .booking-step>h3{font-size:24px!important;margin:5px 2px 12px!important}
+  #bookingSheet .booking-service{min-height:80px!important}#bookingSheet .jl-booking-photo{width:72px!important;height:60px!important;min-width:72px!important}
+  #bookingSheet .booking-map{height:230px!important;min-height:210px!important}
+  #bookingSheet .sheet-footer .btn{min-height:48px!important;font-size:16px!important}
+}
+@media(max-width:390px){
+  #bookingSheet .booking-sheet-panel{padding-inline:10px!important}
+  #bookingSheet .sheet-footer{margin-inline:-10px!important;padding-inline:10px!important}
+  #bookingSheet .stepper{gap:3px!important}#bookingSheet .step{min-width:45px!important}.stepper>i{min-width:12px!important}
+  #bookingSheet .location-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  #bookingSheet .location-actions .btn{font-size:9px!important}
+}
+@media(max-width:340px){
+  #bookingSheet .step span{display:none!important}#bookingSheet .stepper{margin-bottom:7px!important}
+  #bookingSheet .booking-service strong{font-size:16px!important}.booking-service small{font-size:10px!important}
+  #bookingSheet .location-actions{grid-template-columns:1fr 1fr!important}#bookingSheet .location-actions .btn:first-child{grid-column:1/-1!important}
+}
