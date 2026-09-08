@@ -78,13 +78,11 @@
             <input id="pickupLat" type="hidden" /><input id="pickupLng" type="hidden" />
             <input id="destinationLat" type="hidden" /><input id="destinationLng" type="hidden" />
             <label>ملاحظات اختيارية<textarea id="rideNotes" rows="3" placeholder="مثال: انتظرني عند الباب الرئيسي"></textarea></label>
-
             <div id="quoteCard" class="quote-card hidden">
               <div><span>المسافة التقريبية</span><strong id="quoteDistance">0 كم</strong></div>
               <div><span>السعر التقديري</span><strong id="quoteFare">0 د.ع</strong></div>
               <small>السعر محسوب تلقائياً من نظام جيبلي وقد يختلف النهائي حسب تفاصيل الرحلة.</small>
             </div>
-
             <button id="previewBtn" class="secondary-btn" type="button">احسب السعر</button>
             <button class="primary-btn" type="submit">تأكيد وطلب جيبلي</button>
           </form>
@@ -108,6 +106,7 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./config.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
