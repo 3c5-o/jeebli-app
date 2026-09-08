@@ -1,0 +1,21 @@
+(()=>{
+  if(/(?:admin|driver)\.html$/i.test(location.pathname))return;
+  const ready=fn=>document.readyState==='loading'?document.addEventListener('DOMContentLoaded',fn,{once:true}):fn();
+  ready(init);
+  async function init(){
+    if(!window.supabase||!window.JEEBLI_CONFIG)return;
+    const db=window.supabase.createClient(window.JEEBLI_CONFIG.SUPABASE_URL,window.JEEBLI_CONFIG.SUPABASE_KEY);
+    const $=id=>document.getElementById(id),$$=(s,r=document)=>[...r.querySelectorAll(s)],notify=m=>window.notify?window.notify(m):console.log(m);
+    let user=null,areas=[],profileArea=null;
+    const {data:{session}}=await db.auth.getSession();if(session?.user)await start(session.user);
+    db.auth.onAuthStateChange(async(_e,s)=>{if(s?.user&&s.user.id!==user?.id)await start(s.user);if(!s?.user)user=null});
+
+    async function start(u){user=u;const [{data:a},{data:p}]=await Promise.all([db.from('service_areas').select('id,name_ar,area_type,parent_id,sort_order').eq('is_active',true).order('sort_order').order('name_ar'),db.from('profiles').select('area_id').eq('id',u.id).maybeSingle()]);areas=a||[];profileArea=p?.area_id||null;injectAreaField();bindQuick()}
+    function path(id){const map=Object.fromEntries(areas.map(a=>[a.id,a]));const names=[];let cur=map[id],guard=0;while(cur&&guard++<6){names.unshift(cur.name_ar);cur=map[cur.parent_id]}return names.join(' ← ')}
+    function injectAreaField(){const form=$('addressForm');if(!form||$('addressAreaId'))return;const label=document.createElement('label');label.innerHTML='<span>المنطقة</span><select id="addressAreaId" required></select>';const text=$('addressText')?.closest('label');if(text)text.insertAdjacentElement('afterend',label);else form.prepend(label);const rows=areas.filter(a=>['village','neighborhood'].includes(a.area_type));$('addressAreaId').innerHTML='<option value="">اختر القرية / المنطقة</option>'+rows.map(a=>`<option value="${a.id}">${escapeHtml(path(a.id))}</option>`).join('');if(profileArea&&rows.some(a=>a.id===profileArea))$('addressAreaId').value=profileArea;form.addEventListener('submit',saveEnhanced,true)}
+    function escapeHtml(v=''){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+    async function saveEnhanced(e){e.preventDefault();e.stopImmediatePropagation();if(!user)return;const label=$('addressLabel')?.value.trim(),address=$('addressText')?.value.trim(),lat=Number($('addressLat')?.value),lng=Number($('addressLng')?.value),area_id=$('addressAreaId')?.value||profileArea;if(!label||!address||!Number.isFinite(lat)||!Number.isFinite(lng)||!area_id)return notify('أكمل اسم العنوان والموقع والمنطقة');const btn=e.currentTarget.querySelector('[type="submit"]');if(btn)btn.disabled=true;const {error}=await db.from('saved_addresses').insert({user_id:user.id,label,address,lat,lng,area_id});if(btn)btn.disabled=false;if(error)return notify(`تعذر حفظ العنوان: ${error.message}`);e.currentTarget.reset();if($('addressAreaId'))$('addressAreaId').value=profileArea||'';notify('تم حفظ العنوان وربطه بالمنطقة');window.loadAddresses?.()}
+    function bindQuick(){$$('[data-quick="home"],[data-quick="work"]').forEach(b=>{if(b.dataset.boundQuick)return;b.dataset.boundQuick='1';b.addEventListener('click',()=>useQuick(b.dataset.quick))})}
+    async function useQuick(type){if(!user)return;const {data}=await db.from('saved_addresses').select('*').eq('user_id',user.id).order('created_at',{ascending:false});const aliases=type==='home'?['البيت','بيت','home']:['العمل','عمل','work'];const item=(data||[]).find(a=>aliases.includes(String(a.label||'').trim().toLowerCase()));if(!item){notify(type==='home'?'احفظ عنواناً باسم «البيت» أولاً':'احفظ عنواناً باسم «العمل» أولاً');document.getElementById('openSavedAddresses')?.click();return}if(typeof window.openBooking!=='function')return;window.openBooking('taxi');setTimeout(()=>{if(Number.isFinite(Number(item.lat))&&Number.isFinite(Number(item.lng)))window.setBookingPoint?.('destination',Number(item.lat),Number(item.lng));if($('destinationAddress'))$('destinationAddress').value=item.address||item.label;if($('v2DestinationArea')&&item.area_id)$('v2DestinationArea').value=item.area_id;notify(`تم اختيار ${item.label} كوجهة`)},220)}
+  }
+})();
