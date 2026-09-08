@@ -1,9 +1,9 @@
-const CACHE='jeebli-customer-v20';
+const CACHE='jeebli-customer-v21';
 const CORE=[
-  './','./index.html','./styles.css','./brand.css','./customer-v2.css','./customer-v3.css','./customer-services.css','./customer-avatar.css','./customer-polish.css','./customer-contrast.css','./customer-lux.css','./customer-home-v2.css','./customer-service-images.css',
-  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js','./customer-starex.js','./customer-launch.js','./customer-avatar.js','./customer-addresses.js','./customer-system-notify.js','./customer-polish.js','./customer-ux.js','./customer-push.js','./customer-lux.js','./customer-home-v2.js','./customer-service-images.js',
-  './manifest.webmanifest','./assets/brand/mark.svg','./assets/brand/hero.svg',
-  './assets/services/taxi.svg','./assets/services/private.svg','./assets/services/delivery.svg','./assets/services/cargo.svg','./assets/services/intercity.svg'
+  './','./index.html','./styles.css','./brand.css','./customer-v2.css','./customer-v3.css','./customer-services.css','./customer-avatar.css','./customer-polish.css','./customer-contrast.css','./customer-lux.css','./customer-home-v2.css','./customer-service-images.css','./customer-mobile-fixes.css',
+  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js','./customer-starex.js','./customer-launch.js','./customer-avatar.js','./customer-addresses.js','./customer-system-notify.js','./customer-polish.js','./customer-ux.js','./customer-push.js','./customer-lux.js','./customer-home-v2.js','./customer-service-images.js','./customer-mobile-fixes.js',
+  './manifest.webmanifest','./assets/brand/mark.svg','./assets/brand/hero.svg','./assets/brand/app-icon.svg',
+  './assets/services/taxi.svg','./assets/services/private.svg','./assets/services/delivery.svg','./assets/services/cargo.svg','./assets/services/intercity.svg','./assets/services/private-photo.svg','./assets/services/delivery-photo.svg'
 ];
 self.addEventListener('install',event=>{
   self.skipWaiting();
@@ -40,8 +40,8 @@ self.addEventListener('push',event=>{
   const title=data.title||'جيبلي | JEEBLI';
   const options={
     body:data.body||'لديك تحديث جديد في جيبلي',
-    icon:data.icon||'./assets/brand/mark.svg',
-    badge:data.badge||'./assets/brand/mark.svg',
+    icon:data.icon||'./assets/brand/app-icon.svg',
+    badge:data.badge||'./assets/brand/app-icon.svg',
     tag:data.tag||`jeebli-${Date.now()}`,
     renotify:true,
     dir:'rtl',
