@@ -1,7 +1,7 @@
-const CACHE='jeebli-customer-v11';
+const CACHE='jeebli-customer-v12';
 const CORE=[
-  './','./index.html','./styles.css','./brand.css','./customer-v2.css','./customer-v3.css','./customer-services.css','./customer-avatar.css',
-  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js','./customer-launch.js','./customer-avatar.js','./customer-addresses.js',
+  './','./index.html','./styles.css','./brand.css','./customer-v2.css','./customer-v3.css','./customer-services.css','./customer-avatar.css','./customer-polish.css',
+  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js','./customer-launch.js','./customer-avatar.js','./customer-addresses.js','./customer-polish.js',
   './manifest.webmanifest','./assets/brand/mark.svg','./assets/brand/hero.svg',
   './assets/services/taxi.svg','./assets/services/private.svg','./assets/services/delivery.svg','./assets/services/cargo.svg','./assets/services/intercity.svg'
 ];
@@ -15,6 +15,7 @@ self.addEventListener('activate',event=>{
     caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))
   ]));
 });
+self.addEventListener('message',event=>{if(event.data?.type==='SKIP_WAITING')self.skipWaiting()});
 self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET')return;
   const url=new URL(event.request.url);
