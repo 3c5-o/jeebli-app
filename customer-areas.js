@@ -34,13 +34,15 @@
       if(existing){if(onload)existing.addEventListener('load',onload,{once:true});return existing}
       const s=document.createElement('script');s.src=src;s.async=false;if(onload)s.addEventListener('load',onload,{once:true});document.body.appendChild(s);return s;
     };
-    const loadPush=()=>loadScript('./customer-push.js');
+    const loadLux=()=>loadScript('./customer-lux.js');
+    const loadPush=()=>loadScript('./customer-push.js',loadLux);
     const loadUX=()=>loadScript('./customer-ux.js',loadPush);
     const loadPolish=()=>loadScript('./customer-polish.js',loadUX);
     const loadLaunch=()=>loadScript('./customer-launch.js',loadPolish);
     const loadAddresses=()=>loadScript('./customer-addresses.js',loadLaunch);
     const loadAvatar=()=>loadScript('./customer-avatar.js',loadAddresses);
-    const loadServices=()=>loadScript('./customer-services.js',loadAvatar);
+    const loadStarex=()=>loadScript('./customer-starex.js',loadAvatar);
+    const loadServices=()=>loadScript('./customer-services.js',loadStarex);
     const loadBridge=()=>loadScript('./customer-v3-bridge.js',loadServices);
     const loadV3=()=>loadScript('./customer-v3.js',loadBridge);
     loadScript('./customer-v2.js',loadV3);
@@ -48,12 +50,14 @@
       if(!document.querySelector('script[src="./customer-v3.js"]'))loadV3();
       if(!document.querySelector('script[src="./customer-v3-bridge.js"]'))loadBridge();
       if(!document.querySelector('script[src="./customer-services.js"]'))loadServices();
+      if(!document.querySelector('script[src="./customer-starex.js"]'))loadStarex();
       if(!document.querySelector('script[src="./customer-avatar.js"]'))loadAvatar();
       if(!document.querySelector('script[src="./customer-addresses.js"]'))loadAddresses();
       if(!document.querySelector('script[src="./customer-launch.js"]'))loadLaunch();
       if(!document.querySelector('script[src="./customer-polish.js"]'))loadPolish();
       if(!document.querySelector('script[src="./customer-ux.js"]'))loadUX();
       if(!document.querySelector('script[src="./customer-push.js"]'))loadPush();
+      if(!document.querySelector('script[src="./customer-lux.js"]'))loadLux();
     },1800);
   });
 })();
