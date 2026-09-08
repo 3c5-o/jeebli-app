@@ -1,12 +1,40 @@
 {
-  "name": "جيبلي - JEEBLI",
+  "id": "./",
+  "name": "جيبلي | JEEBLI",
   "short_name": "جيبلي",
-  "description": "منصة جيبلي للرحلات والتوصيل",
-  "start_url": "./",
+  "description": "جيبلي للنقل والتوصيل والطلبات داخل مناطق الخدمة",
+  "start_url": "./?source=pwa",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#07111f",
-  "theme_color": "#07111f",
-  "lang": "ar",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#07101f",
+  "theme_color": "#07101f",
+  "lang": "ar-IQ",
   "dir": "rtl",
-  "icons": []
+  "categories": ["travel", "navigation", "utilities"],
+  "icons": [
+    {
+      "src": "./assets/brand/mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "طلب رحلة",
+      "short_name": "طلب رحلة",
+      "description": "افتح جيبلي وابدأ طلباً جديداً",
+      "url": "./?action=book",
+      "icons": [{"src":"./assets/services/taxi.svg","sizes":"any","type":"image/svg+xml"}]
+    },
+    {
+      "name": "طلباتي",
+      "short_name": "طلباتي",
+      "description": "عرض الطلبات الحالية والسابقة",
+      "url": "./?action=requests",
+      "icons": [{"src":"./assets/brand/mark.svg","sizes":"any","type":"image/svg+xml"}]
+    }
+  ]
 }
