@@ -34,7 +34,9 @@
       if(existing){if(onload)existing.addEventListener('load',onload,{once:true});return existing}
       const s=document.createElement('script');s.src=src;s.async=false;if(onload)s.addEventListener('load',onload,{once:true});document.body.appendChild(s);return s;
     };
-    const loadLux=()=>loadScript('./customer-lux.js');
+    const loadServiceImages=()=>loadScript('./customer-service-images.js');
+    const loadHomeV2=()=>loadScript('./customer-home-v2.js',loadServiceImages);
+    const loadLux=()=>loadScript('./customer-lux.js',loadHomeV2);
     const loadPush=()=>loadScript('./customer-push.js',loadLux);
     const loadUX=()=>loadScript('./customer-ux.js',loadPush);
     const loadPolish=()=>loadScript('./customer-polish.js',loadUX);
@@ -58,6 +60,8 @@
       if(!document.querySelector('script[src="./customer-ux.js"]'))loadUX();
       if(!document.querySelector('script[src="./customer-push.js"]'))loadPush();
       if(!document.querySelector('script[src="./customer-lux.js"]'))loadLux();
+      if(!document.querySelector('script[src="./customer-home-v2.js"]'))loadHomeV2();
+      if(!document.querySelector('script[src="./customer-service-images.js"]'))loadServiceImages();
     },1800);
   });
 })();
