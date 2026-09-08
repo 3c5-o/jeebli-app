@@ -1,8 +1,8 @@
 (()=>{
   if(/(?:admin|driver)\.html$/i.test(location.pathname))return;
-  if(!document.querySelector('script[src="./customer-avatar.js"]')){
-    const avatar=document.createElement('script');avatar.src='./customer-avatar.js';avatar.async=false;document.body.appendChild(avatar);
-  }
+  const load=src=>{if(document.querySelector(`script[src="${src}"]`))return;const s=document.createElement('script');s.src=src;s.async=false;document.body.appendChild(s)};
+  load('./customer-avatar.js');
+  load('./customer-addresses.js');
   const params=new URLSearchParams(location.search),action=params.get('action');
   if(!action)return;
   const run=()=>{
