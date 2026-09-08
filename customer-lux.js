@@ -3,12 +3,12 @@
   const ready=fn=>document.readyState==='loading'?document.addEventListener('DOMContentLoaded',fn,{once:true}):fn();
   ready(init);
 
-  const LOGO='https://e.top4top.io/p_3903njl7j1.jpg';
-  const FALLBACK_LOGO='./assets/brand/mark.svg';
+  const LOGO='./assets/brand/app-icon.svg';
+  const FALLBACK_LOGO='./assets/brand/app-icon.svg';
   const IMAGES={
     taxi:'https://a.top4top.io/p_39037ruz91.jpg',
-    private:'https://b.top4top.io/p_3903uole11.jpg',
-    delivery:'https://d.top4top.io/p_3903w8nwl1.jpg',
+    private:'./assets/services/private-photo.svg',
+    delivery:'./assets/services/delivery-photo.svg',
     cargo:'https://e.top4top.io/p_39031nwfb1.jpg',
     starex:'https://f.top4top.io/p_3903d2ibm1.jpg',
     intercity:'https://c.top4top.io/p_3903gu3zr1.jpg'
@@ -19,7 +19,7 @@
 
   function init(){
     loadCss();applyThemeMeta();decorateBrand();decorateServices();observeServices();loadHomeV2();
-    window.addEventListener('load',()=>setTimeout(()=>{decorateBrand();decorateServices();loadHomeV2()},700));
+    window.addEventListener('load',()=>setTimeout(()=>{decorateBrand();decorateServices();loadHomeV2();window.JEEBLI_SERVICE_IMAGES?.refresh?.()},700));
   }
   function loadCss(){if(document.querySelector('link[href="./customer-lux.css"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href='./customer-lux.css';document.head.appendChild(l)}
   function loadHomeV2(){if(document.querySelector('script[src="./customer-home-v2.js"]'))return;const s=document.createElement('script');s.src='./customer-home-v2.js';s.async=false;document.body.appendChild(s)}
@@ -27,10 +27,10 @@
     const theme=document.querySelector('meta[name="theme-color"]');if(theme)theme.content='#061321';
     const status=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');if(status)status.content='black-translucent';
   }
-  function logoImg(cls=''){const img=document.createElement('img');img.src=LOGO;img.alt='جيبلي';img.className=cls;img.referrerPolicy='no-referrer';img.onerror=()=>{if(img.src.endsWith('mark.svg'))return;img.src=FALLBACK_LOGO};return img}
+  function logoImg(cls=''){const img=document.createElement('img');img.src=LOGO;img.alt='جيبلي';img.className=cls;img.onerror=()=>{if(img.src.endsWith('app-icon.svg'))return;img.src=FALLBACK_LOGO};return img}
   function decorateBrand(){
-    const splash=document.querySelector('.splash-logo');if(splash&&!splash.querySelector('img')){splash.textContent='';splash.appendChild(logoImg())}
-    const brand=document.querySelector('.brand-logo');if(brand&&!brand.querySelector('img')){brand.textContent='';brand.appendChild(logoImg())}
+    const splash=document.querySelector('.splash-logo');if(splash){splash.textContent='';if(!splash.querySelector('img'))splash.appendChild(logoImg())}
+    const brand=document.querySelector('.brand-logo');if(brand){brand.textContent='';if(!brand.querySelector('img'))brand.appendChild(logoImg())}
     document.querySelectorAll('.auth-copy h2').forEach(h=>h.textContent='كل الطرق أقرب إليك.');
     document.querySelectorAll('.auth-copy p:not(.kicker)').forEach(p=>p.textContent='اطلب وسيلة النقل المناسبة، استقبل عروض السائقين، واختر السعر والخدمة اللي تناسبك.');
   }
@@ -43,15 +43,15 @@
   }
   function decorateHomeCard(card,code){
     const url=IMAGES[code];if(!url||card.dataset.luxDone==='1')return;card.dataset.luxDone='1';card.classList.add('lux-service-card');
-    const media=document.createElement('span');media.className='lux-service-media';const img=document.createElement('img');img.src=url;img.alt=card.querySelector('strong')?.textContent||code;img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';img.onerror=()=>{media.style.display='none'};media.appendChild(img);card.prepend(media);
+    const media=document.createElement('span');media.className='lux-service-media';const img=document.createElement('img');img.src=url;img.alt=card.querySelector('strong')?.textContent||code;img.loading='lazy';img.decoding='async';if(/^https?:/i.test(url))img.referrerPolicy='no-referrer';img.onerror=()=>{media.style.display='none';window.JEEBLI_SERVICE_IMAGES?.refresh?.()};media.appendChild(img);card.prepend(media);
     const copy=card.querySelector('.service-copy');if(copy){const small=copy.querySelector('small');if(small&&DESCS[code])small.textContent=DESCS[code]}
     const arrow=document.createElement('span');arrow.className='lux-service-arrow';arrow.textContent='‹';card.appendChild(arrow);
   }
   function decorateBookingCard(card,code){
     const url=IMAGES[code];if(!url||card.dataset.luxDone==='1')return;card.dataset.luxDone='1';card.classList.add('lux-booking-service');
-    const img=document.createElement('img');img.className='lux-booking-img';img.src=url;img.alt='';img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';img.onerror=()=>img.remove();card.prepend(img);
+    const img=document.createElement('img');img.className='lux-booking-img';img.src=url;img.alt='';img.loading='lazy';img.decoding='async';if(/^https?:/i.test(url))img.referrerPolicy='no-referrer';img.onerror=()=>{img.remove();window.JEEBLI_SERVICE_IMAGES?.refresh?.()};card.prepend(img);
     const small=card.querySelector('small');if(small&&DESCS[code])small.textContent=DESCS[code];
   }
 
-  window.JEEBLI_LUX={logo:LOGO,images:IMAGES,refresh:()=>{decorateBrand();decorateServices();loadHomeV2()}};
+  window.JEEBLI_LUX={logo:LOGO,images:IMAGES,refresh:()=>{decorateBrand();decorateServices();loadHomeV2();window.JEEBLI_SERVICE_IMAGES?.refresh?.()}};
 })();
