@@ -2,80 +2,276 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#07111f" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>جيبلي | JEEBLI</title>
   <link rel="manifest" href="./manifest.webmanifest" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="app-shell">
-    <header class="topbar">
-      <div><p class="eyebrow">JEEBLI</p><h1>جيبلي.. أقرب مما تتخيل</h1></div>
-      <button id="logoutBtn" class="icon-btn hidden" aria-label="تسجيل الخروج">↪</button>
-    </header>
-    <main>
-      <section id="authView" class="panel auth-panel">
-        <div class="brand-mark">ج</div><h2>أهلاً بك في جيبلي</h2>
-        <p class="muted">سجّل دخولك حتى تطلب رحلتك وتشوف السعر والحالة بشكل مباشر.</p>
-        <div class="tabs"><button class="tab active" data-tab="login">تسجيل الدخول</button><button class="tab" data-tab="signup">إنشاء حساب</button></div>
-        <form id="loginForm" class="form active-form">
-          <label>البريد الإلكتروني<input id="loginEmail" type="email" placeholder="name@example.com" required /></label>
-          <label>كلمة المرور<input id="loginPassword" type="password" placeholder="••••••••" minlength="6" required /></label>
-          <button class="primary-btn" type="submit">دخول</button>
-        </form>
-        <form id="signupForm" class="form">
-          <label>الاسم الكامل<input id="signupName" type="text" placeholder="مثال: حمد" required /></label>
-          <label>رقم الهاتف<input id="signupPhone" type="tel" placeholder="07xxxxxxxxx" required /></label>
-          <label>البريد الإلكتروني<input id="signupEmail" type="email" placeholder="name@example.com" required /></label>
-          <label>كلمة المرور<input id="signupPassword" type="password" placeholder="6 أحرف أو أكثر" minlength="6" required /></label>
-          <button class="primary-btn" type="submit">إنشاء الحساب</button>
-        </form>
-      </section>
-
-      <section id="appView" class="hidden">
-        <section class="hero-card"><div><p class="eyebrow">مرحباً، <span id="userName">مستخدم جيبلي</span></p><h2>وين تريد تروح اليوم؟</h2></div><div class="status-pill">● متصل</div></section>
-        <section class="services-grid">
-          <button class="service-card selected" data-service="taxi"><span>🚕</span><strong>تكسي</strong><small>سريع واقتصادي</small></button>
-          <button class="service-card" data-service="private"><span>🚘</span><strong>خصوصي</strong><small>راحة أكثر</small></button>
-          <button class="service-card" data-service="delivery"><span>📦</span><strong>توصيل</strong><small>طلبات وطرود</small></button>
-          <button class="service-card" data-service="intercity"><span>🛣️</span><strong>بين المحافظات</strong><small>مشوار بعيد</small></button>
-        </section>
-        <section class="panel map-panel">
-          <div class="section-title-row"><div><p class="eyebrow">الخريطة</p><h3>حدد الانطلاق والوجهة</h3></div><button id="useLocationBtn" class="ghost-btn" type="button">📍 موقعي</button></div>
-          <div class="map-hint">اضغط «حدد الانطلاق» أو «حدد الوجهة»، بعدها المس المكان المطلوب على الخريطة.</div>
-          <div class="map-actions"><button id="pickPickupBtn" class="map-action active" type="button">🟢 حدد الانطلاق</button><button id="pickDestinationBtn" class="map-action" type="button">📍 حدد الوجهة</button></div>
-          <div id="map"></div>
-        </section>
-        <section class="panel booking-panel">
-          <div class="section-title-row"><div><p class="eyebrow">تفاصيل الرحلة</p><h3>راجع الطلب</h3></div><span id="quoteState" class="tiny-badge">بانتظار الوجهة</span></div>
-          <form id="rideForm" class="form compact-form">
-            <label>موقع الانطلاق<input id="pickupAddress" type="text" placeholder="اكتب وصفاً واضحاً للمكان" required /></label>
-            <label>الوجهة<input id="destinationAddress" type="text" placeholder="اكتب اسم المنطقة أو المكان" required /></label>
-            <input id="pickupLat" type="hidden" /><input id="pickupLng" type="hidden" /><input id="destinationLat" type="hidden" /><input id="destinationLng" type="hidden" />
-            <label>ملاحظات اختيارية<textarea id="rideNotes" rows="3" placeholder="مثال: انتظرني عند الباب الرئيسي"></textarea></label>
-            <div id="quoteCard" class="quote-card hidden"><div><span>المسافة التقريبية</span><strong id="quoteDistance">0 كم</strong></div><div><span>السعر التقديري</span><strong id="quoteFare">0 د.ع</strong></div><small>السعر محسوب تلقائياً من نظام جيبلي وقد يختلف النهائي حسب تفاصيل الرحلة.</small></div>
-            <button id="previewBtn" class="secondary-btn" type="button">احسب السعر</button><button class="primary-btn" type="submit">تأكيد وطلب جيبلي</button>
-          </form>
-        </section>
-        <section id="activeRidePanel" class="panel active-ride hidden">
-          <div class="section-title-row"><div><p class="eyebrow">الطلب الحالي</p><h3 id="activeRideStatus">جاري تجهيز الطلب</h3></div><span id="activeRideId" class="tiny-badge"></span></div>
-          <div class="progress-track"><i id="progressBar"></i></div><div id="activeRoute" class="active-route"></div><div class="active-ride-actions"><button id="cancelRideBtn" class="danger-btn" type="button">إلغاء الطلب</button></div>
-        </section>
-        <section class="panel"><div class="section-title-row"><div><p class="eyebrow">رحلاتي</p><h3>آخر الطلبات</h3></div><button id="refreshRidesBtn" class="ghost-btn" type="button">تحديث</button></div><div id="ridesList" class="rides-list"></div></section>
-      </section>
-    </main>
-    <div id="toast" class="toast hidden"></div>
+  <div id="splash" class="splash">
+    <div class="splash-logo">ج</div>
+    <h1>جيبلي</h1>
+    <p>كل شيء أقرب</p>
   </div>
+
+  <div class="app-shell">
+    <section id="authView" class="auth-view hidden">
+      <div class="auth-brand">
+        <div class="brand-logo">ج</div>
+        <div><span>JEEBLI</span><h1>جيبلي</h1></div>
+      </div>
+      <div class="auth-copy">
+        <p class="kicker">أهلاً بك</p>
+        <h2>اطلب، قارن العروض، واتفق على السعر.</h2>
+        <p>جيبلي يخلي النقل والتوصيل أوضح: تحدد طلبك، السائقون يرسلون عروضهم، وأنت تختار الأنسب.</p>
+      </div>
+      <div class="auth-card">
+        <div class="segmented">
+          <button class="seg-btn active" data-auth-tab="login">دخول</button>
+          <button class="seg-btn" data-auth-tab="signup">حساب جديد</button>
+        </div>
+        <form id="loginForm" class="auth-form active">
+          <label>البريد الإلكتروني<input id="loginEmail" type="email" required placeholder="name@example.com" /></label>
+          <label>كلمة المرور<input id="loginPassword" type="password" required minlength="6" placeholder="••••••••" /></label>
+          <button class="btn btn-primary" type="submit">تسجيل الدخول</button>
+        </form>
+        <form id="signupForm" class="auth-form">
+          <label>الاسم الكامل<input id="signupName" type="text" required placeholder="اسمك الكامل" /></label>
+          <label>رقم الهاتف<input id="signupPhone" type="tel" required placeholder="07xxxxxxxxx" /></label>
+          <label>البريد الإلكتروني<input id="signupEmail" type="email" required placeholder="name@example.com" /></label>
+          <label>كلمة المرور<input id="signupPassword" type="password" required minlength="6" placeholder="6 أحرف أو أكثر" /></label>
+          <button class="btn btn-primary" type="submit">إنشاء الحساب</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="appView" class="app-view hidden">
+      <header class="app-header">
+        <button id="profileAvatarBtn" class="avatar-btn" aria-label="الحساب"><span id="avatarInitial">ج</span></button>
+        <div class="header-location">
+          <small>موقعك الحالي</small>
+          <button id="headerLocationBtn"><i data-lucide="map-pin"></i><span id="headerLocationText">حدد موقعك</span><i data-lucide="chevron-down"></i></button>
+        </div>
+        <button class="header-action" data-page-target="notifications" aria-label="الإشعارات"><i data-lucide="bell"></i><span id="notifDot" class="notif-dot hidden"></span></button>
+      </header>
+
+      <main class="pages-wrap">
+        <section id="page-home" class="page active">
+          <div class="home-map-card">
+            <div id="homeMap" class="home-map"></div>
+            <button id="homeLocateBtn" class="map-fab"><i data-lucide="locate-fixed"></i></button>
+            <button id="homeSearchBtn" class="destination-search"><i data-lucide="search"></i><span>وين تريد تروح؟</span></button>
+          </div>
+
+          <section id="activeRequestHome" class="active-request-card hidden"></section>
+
+          <section class="section-block">
+            <div class="section-head"><div><p class="kicker">خدمات جيبلي</p><h2>شنو تحتاج اليوم؟</h2></div></div>
+            <div id="servicesGrid" class="services-grid"></div>
+          </section>
+
+          <section class="feature-banner">
+            <div class="banner-icon"><i data-lucide="messages-square"></i></div>
+            <div><strong>أنت تختار السعر المناسب</strong><p>بدون تسعير بالكيلومتر. السائقون يرسلون عروضهم وأنت تقارن وتقرر.</p></div>
+          </section>
+
+          <section class="section-block quick-section">
+            <div class="section-head"><h2>اختصارات</h2></div>
+            <div class="quick-grid">
+              <button class="quick-card" data-quick="home"><i data-lucide="house"></i><span>البيت</span></button>
+              <button class="quick-card" data-quick="work"><i data-lucide="briefcase-business"></i><span>العمل</span></button>
+              <button class="quick-card" id="openSavedAddresses"><i data-lucide="bookmark"></i><span>عناويني</span></button>
+              <button class="quick-card" data-page-target="requests"><i data-lucide="history"></i><span>طلباتي</span></button>
+            </div>
+          </section>
+        </section>
+
+        <section id="page-requests" class="page">
+          <div class="page-title"><p class="kicker">كل شيء بمكان واحد</p><h1>طلباتي</h1></div>
+          <div class="filter-row" id="requestsFilters">
+            <button class="filter-chip active" data-filter="all">الكل</button>
+            <button class="filter-chip" data-filter="active">الحالية</button>
+            <button class="filter-chip" data-filter="completed">المكتملة</button>
+            <button class="filter-chip" data-filter="cancelled">الملغاة</button>
+          </div>
+          <div id="requestsList" class="cards-list"></div>
+        </section>
+
+        <section id="page-notifications" class="page">
+          <div class="page-title"><p class="kicker">تحديثات مباشرة</p><h1>الإشعارات</h1></div>
+          <button id="markAllReadBtn" class="text-action">تحديد الكل كمقروء</button>
+          <div id="notificationsList" class="cards-list"></div>
+        </section>
+
+        <section id="page-account" class="page">
+          <div class="page-title"><p class="kicker">حساب جيبلي</p><h1>حسابي</h1></div>
+          <section class="profile-hero">
+            <div class="profile-avatar"><span id="accountInitial">ج</span></div>
+            <div><h2 id="accountName">مستخدم جيبلي</h2><p id="accountPhone">—</p><span class="member-badge">عضو جيبلي</span></div>
+          </section>
+          <section class="settings-card">
+            <div class="settings-head"><h3>بياناتي الشخصية</h3><i data-lucide="user-round"></i></div>
+            <form id="profileForm" class="stack-form">
+              <label>الاسم الكامل<input id="profileName" type="text" required /></label>
+              <label>رقم الهاتف<input id="profilePhone" type="tel" required /></label>
+              <button class="btn btn-primary" type="submit">حفظ البيانات</button>
+            </form>
+          </section>
+          <div class="menu-card">
+            <button id="accountAddressesBtn"><i data-lucide="map-pinned"></i><span>العناوين المحفوظة</span><i data-lucide="chevron-left"></i></button>
+            <button data-page-target="requests"><i data-lucide="route"></i><span>طلباتي ونشاطي</span><i data-lucide="chevron-left"></i></button>
+            <button class="coming"><i data-lucide="credit-card"></i><span>وسائل الدفع</span><small>قريباً</small></button>
+            <button id="accountSupportBtn"><i data-lucide="life-buoy"></i><span>المساعدة والدعم</span><i data-lucide="chevron-left"></i></button>
+          </div>
+        </section>
+
+        <section id="page-more" class="page">
+          <div class="page-title"><p class="kicker">الإعدادات والمساعدة</p><h1>المزيد</h1></div>
+          <div class="menu-card">
+            <button id="installAppBtn"><i data-lucide="smartphone"></i><span>تثبيت جيبلي</span><i data-lucide="chevron-left"></i></button>
+            <button id="supportBtn"><i data-lucide="circle-help"></i><span>مساعد جيبلي والدعم</span><i data-lucide="chevron-left"></i></button>
+            <button id="notifPermissionBtn"><i data-lucide="bell-ring"></i><span>تفعيل الإشعارات</span><i data-lucide="chevron-left"></i></button>
+            <button id="aboutBtn"><i data-lucide="info"></i><span>عن جيبلي</span><i data-lucide="chevron-left"></i></button>
+            <button id="termsBtn"><i data-lucide="file-text"></i><span>الشروط والأحكام</span><i data-lucide="chevron-left"></i></button>
+            <button id="privacyBtn"><i data-lucide="shield-check"></i><span>سياسة الخصوصية</span><i data-lucide="chevron-left"></i></button>
+            <button id="logoutBtn" class="danger-row"><i data-lucide="log-out"></i><span>تسجيل الخروج</span></button>
+          </div>
+          <div class="copyright-card"><strong>© جيبلي 2026</strong><p>نسخة تجريبية متصلة بـ Supabase.</p></div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav">
+        <button class="nav-btn active" data-page="home"><i data-lucide="house"></i><span>الرئيسية</span></button>
+        <button class="nav-btn" data-page="requests"><i data-lucide="map-pin-check"></i><span>طلباتي</span></button>
+        <button class="nav-btn" data-page="notifications"><i data-lucide="bell"></i><span>الإشعارات</span></button>
+        <button class="nav-btn" data-page="account"><i data-lucide="user-round"></i><span>حسابي</span></button>
+        <button class="nav-btn" data-page="more"><i data-lucide="ellipsis"></i><span>المزيد</span></button>
+      </nav>
+    </section>
+  </div>
+
+  <section id="bookingSheet" class="sheet hidden" aria-hidden="true">
+    <div class="sheet-panel booking-sheet-panel">
+      <div class="sheet-handle"></div>
+      <div class="sheet-top"><button id="closeBookingBtn" class="round-btn"><i data-lucide="x"></i></button><div><small>طلب جديد</small><h2>احجز عبر جيبلي</h2></div></div>
+      <div class="stepper">
+        <div class="step active" data-step-dot="1"><b>1</b><span>الخدمة</span></div><i></i>
+        <div class="step" data-step-dot="2"><b>2</b><span>الموقع</span></div><i></i>
+        <div class="step" data-step-dot="3"><b>3</b><span>التفاصيل</span></div><i></i>
+        <div class="step" data-step-dot="4"><b>4</b><span>التأكيد</span></div>
+      </div>
+
+      <div id="bookingStep1" class="booking-step active">
+        <h3>اختر الخدمة</h3>
+        <div id="bookingServices" class="booking-services"></div>
+      </div>
+
+      <div id="bookingStep2" class="booking-step">
+        <h3>حدد الانطلاق والوجهة</h3>
+        <div class="location-inputs">
+          <label><span class="dot pickup"></span><input id="pickupAddress" type="text" placeholder="مكان الانطلاق" /></label>
+          <label><span class="dot destination"></span><input id="destinationAddress" type="text" placeholder="الوجهة" /></label>
+        </div>
+        <div class="location-actions"><button id="bookingLocateBtn" class="btn btn-soft"><i data-lucide="locate-fixed"></i> موقعي</button><button id="setPickupModeBtn" class="btn btn-soft active">تحديد الانطلاق</button><button id="setDestinationModeBtn" class="btn btn-soft">تحديد الوجهة</button></div>
+        <div id="bookingMap" class="booking-map"></div>
+        <div id="routeInfo" class="route-info hidden"><span><i data-lucide="route"></i> <b id="routeDistance">—</b></span><span><i data-lucide="banknote"></i> السعر حسب عروض السائقين</span></div>
+        <input id="pickupLat" type="hidden" /><input id="pickupLng" type="hidden" /><input id="destinationLat" type="hidden" /><input id="destinationLng" type="hidden" />
+      </div>
+
+      <div id="bookingStep3" class="booking-step">
+        <h3>تفاصيل الطلب</h3>
+        <div class="stack-form booking-details-form">
+          <label>موعد الطلب<select id="scheduleMode"><option value="now">الآن</option><option value="later">جدولة لوقت لاحق</option></select></label>
+          <label id="scheduledAtWrap" class="hidden">التاريخ والوقت<input id="scheduledAt" type="datetime-local" /></label>
+          <label>ملاحظات للسائق<textarea id="rideNotes" rows="3" placeholder="مثال: أنا عند الباب الرئيسي"></textarea></label>
+          <div id="serviceExtraFields"></div>
+        </div>
+      </div>
+
+      <div id="bookingStep4" class="booking-step">
+        <h3>راجع طلبك</h3>
+        <div id="bookingSummary" class="summary-card"></div>
+        <div class="agreement-card"><i data-lucide="handshake"></i><div><strong>السعر غير محسوب تلقائياً</strong><p>بعد إرسال الطلب ستصلك عروض من السائقين. اختر العرض المناسب وسيثبت السعر بعد القبول.</p></div></div>
+      </div>
+
+      <div class="sheet-footer"><button id="bookingBackBtn" class="btn btn-outline hidden">السابق</button><button id="bookingNextBtn" class="btn btn-primary">التالي</button></div>
+    </div>
+  </section>
+
+  <section id="requestSheet" class="sheet hidden">
+    <div class="sheet-panel request-sheet-panel">
+      <div class="sheet-handle"></div>
+      <div class="sheet-top"><button id="closeRequestBtn" class="round-btn"><i data-lucide="x"></i></button><div><small>طلبك الحالي</small><h2 id="requestSheetTitle">جاري البحث عن عروض</h2></div></div>
+      <div id="requestStatusCard" class="request-status-card"></div>
+      <div id="offersSection">
+        <div class="section-head"><div><p class="kicker">عروض السائقين</p><h3>اختر الأنسب لك</h3></div><span id="offersCount" class="count-badge">0</span></div>
+        <div class="offer-sort"><button class="active" data-offer-sort="best">الأفضل</button><button data-offer-sort="price">الأقل سعراً</button><button data-offer-sort="eta">الأسرع</button></div>
+        <div id="offersList" class="offers-list"></div>
+      </div>
+      <div id="selectedDriverSection" class="hidden"></div>
+      <button id="cancelRequestBtn" class="btn btn-danger">إلغاء الطلب</button>
+    </div>
+  </section>
+
+  <section id="counterSheet" class="sheet hidden">
+    <div class="sheet-panel mini-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-top"><button id="closeCounterBtn" class="round-btn"><i data-lucide="x"></i></button><div><small>تفاوض</small><h2>أرسل سعرك المقترح</h2></div></div>
+      <div class="stack-form"><label>السعر المقترح<input id="counterAmount" type="number" min="500" step="250" placeholder="مثال 6000" /></label><label>رسالة اختيارية<textarea id="counterMessage" rows="2" placeholder="مثال: إذا ممكن 6000"></textarea></label><button id="sendCounterBtn" class="btn btn-primary">إرسال للسائق</button></div>
+    </div>
+  </section>
+
+  <section id="addressesSheet" class="sheet hidden">
+    <div class="sheet-panel mini-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-top"><button id="closeAddressesBtn" class="round-btn"><i data-lucide="x"></i></button><div><small>أماكنك</small><h2>العناوين المحفوظة</h2></div></div>
+      <div id="addressesList" class="cards-list"></div>
+      <form id="addressForm" class="stack-form address-form">
+        <label>اسم مختصر<input id="addressLabel" type="text" placeholder="البيت أو العمل" /></label>
+        <label>العنوان<input id="addressText" type="text" placeholder="وصف العنوان" /></label>
+        <div class="two-col"><input id="addressLat" type="number" step="any" placeholder="خط العرض" /><input id="addressLng" type="number" step="any" placeholder="خط الطول" /></div>
+        <button id="addressUseCurrentBtn" class="btn btn-soft" type="button"><i data-lucide="locate-fixed"></i> استخدام موقعي الحالي</button>
+        <button class="btn btn-primary" type="submit">حفظ العنوان</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="supportSheet" class="sheet hidden">
+    <div class="sheet-panel mini-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-top"><button id="closeSupportBtn" class="round-btn"><i data-lucide="x"></i></button><div><small>نحن هنا للمساعدة</small><h2>دعم جيبلي</h2></div></div>
+      <div class="support-options"><button><i data-lucide="message-circle"></i><span>مشكلة في طلب</span></button><button><i data-lucide="user-round-x"></i><span>مشكلة مع سائق</span></button><button><i data-lucide="package-check"></i><span>مشكلة توصيل</span></button></div>
+      <form id="supportForm" class="stack-form">
+        <label>نوع المشكلة<select id="supportCategory"><option value="ride">طلب أو رحلة</option><option value="driver">السائق</option><option value="delivery">التوصيل</option><option value="account">الحساب</option><option value="other">أخرى</option></select></label>
+        <label>العنوان<input id="supportSubject" type="text" required placeholder="اكتب عنواناً مختصراً" /></label>
+        <label>التفاصيل<textarea id="supportMessage" rows="4" required placeholder="اشرح المشكلة"></textarea></label>
+        <button class="btn btn-primary" type="submit">إرسال للدعم</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="infoSheet" class="sheet hidden">
+    <div class="sheet-panel mini-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-top"><button id="closeInfoBtn" class="round-btn"><i data-lucide="x"></i></button><div><small id="infoKicker">جيبلي</small><h2 id="infoTitle">عن جيبلي</h2></div></div>
+      <div id="infoContent" class="info-content"></div>
+    </div>
+  </section>
+
+  <div id="toast" class="toast hidden"></div>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./config.js"></script><script src="./app.js"></script>
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
   <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}</script>
 </body>
 </html>
