@@ -18,10 +18,11 @@
   };
 
   function init(){
-    loadCss();applyThemeMeta();decorateBrand();injectHero();decorateServices();observeServices();
-    window.addEventListener('load',()=>setTimeout(()=>{decorateBrand();decorateServices();},700));
+    loadCss();applyThemeMeta();decorateBrand();decorateServices();observeServices();loadHomeV2();
+    window.addEventListener('load',()=>setTimeout(()=>{decorateBrand();decorateServices();loadHomeV2()},700));
   }
   function loadCss(){if(document.querySelector('link[href="./customer-lux.css"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href='./customer-lux.css';document.head.appendChild(l)}
+  function loadHomeV2(){if(document.querySelector('script[src="./customer-home-v2.js"]'))return;const s=document.createElement('script');s.src='./customer-home-v2.js';s.async=false;document.body.appendChild(s)}
   function applyThemeMeta(){
     const theme=document.querySelector('meta[name="theme-color"]');if(theme)theme.content='#061321';
     const status=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');if(status)status.content='black-translucent';
@@ -33,15 +34,6 @@
     document.querySelectorAll('.auth-copy h2').forEach(h=>h.textContent='كل الطرق أقرب إليك.');
     document.querySelectorAll('.auth-copy p:not(.kicker)').forEach(p=>p.textContent='اطلب وسيلة النقل المناسبة، استقبل عروض السائقين، واختر السعر والخدمة اللي تناسبك.');
   }
-  function injectHero(){
-    const home=document.getElementById('page-home');if(!home||document.getElementById('jlHero'))return;
-    const map=home.querySelector('.home-map-card');if(!map)return;
-    const hero=document.createElement('section');hero.id='jlHero';hero.className='jl-hero';
-    hero.innerHTML=`<img class="jl-hero-logo" src="${LOGO}" alt="جيبلي" referrerpolicy="no-referrer"><div class="jl-hero-copy"><span class="jl-hero-eyebrow">✦ JEEBLI PREMIUM</span><h2>مشوارك يبدأ من هنا</h2><p>تكسي، خصوصي، دليفري، حمل، ستاركس وسفر — كلها من مكان واحد.</p><button class="jl-hero-btn" type="button">اطلب الآن</button><div class="jl-hero-badges"><span>سعر بالاتفاق</span><span>سائقون حسب منطقتك</span><span>تتبع مباشر</span></div></div>`;
-    hero.querySelector('img').onerror=e=>e.currentTarget.src=FALLBACK_LOGO;
-    hero.querySelector('button').onclick=()=>window.openBooking?.('taxi');
-    map.insertAdjacentElement('beforebegin',hero);
-  }
   function observeServices(){
     ['servicesGrid','bookingServices'].forEach(id=>{const box=document.getElementById(id);if(!box)return;new MutationObserver(()=>decorateServices()).observe(box,{childList:true,subtree:true})});
   }
@@ -51,7 +43,7 @@
   }
   function decorateHomeCard(card,code){
     const url=IMAGES[code];if(!url||card.dataset.luxDone==='1')return;card.dataset.luxDone='1';card.classList.add('lux-service-card');
-    let media=document.createElement('span');media.className='lux-service-media';const img=document.createElement('img');img.src=url;img.alt=card.querySelector('strong')?.textContent||code;img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';img.onerror=()=>{media.style.display='none'};media.appendChild(img);card.prepend(media);
+    const media=document.createElement('span');media.className='lux-service-media';const img=document.createElement('img');img.src=url;img.alt=card.querySelector('strong')?.textContent||code;img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';img.onerror=()=>{media.style.display='none'};media.appendChild(img);card.prepend(media);
     const copy=card.querySelector('.service-copy');if(copy){const small=copy.querySelector('small');if(small&&DESCS[code])small.textContent=DESCS[code]}
     const arrow=document.createElement('span');arrow.className='lux-service-arrow';arrow.textContent='‹';card.appendChild(arrow);
   }
@@ -61,5 +53,5 @@
     const small=card.querySelector('small');if(small&&DESCS[code])small.textContent=DESCS[code];
   }
 
-  window.JEEBLI_LUX={logo:LOGO,images:IMAGES,refresh:()=>{decorateBrand();injectHero();decorateServices()}};
+  window.JEEBLI_LUX={logo:LOGO,images:IMAGES,refresh:()=>{decorateBrand();decorateServices();loadHomeV2()}};
 })();
