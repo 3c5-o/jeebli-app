@@ -1,7 +1,7 @@
-const CACHE='jeebli-customer-v18';
+const CACHE='jeebli-customer-v19';
 const CORE=[
-  './','./index.html','./styles.css','./brand.css','./customer-v2.css','./customer-v3.css','./customer-services.css','./customer-avatar.css','./customer-polish.css','./customer-contrast.css','./customer-lux.css',
-  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js','./customer-starex.js','./customer-launch.js','./customer-avatar.js','./customer-addresses.js','./customer-system-notify.js','./customer-polish.js','./customer-ux.js','./customer-push.js','./customer-lux.js',
+  './','./index.html','./styles.css','./brand.css','./customer-v2.css','./customer-v3.css','./customer-services.css','./customer-avatar.css','./customer-polish.css','./customer-contrast.css','./customer-lux.css','./customer-home-v2.css',
+  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js','./customer-starex.js','./customer-launch.js','./customer-avatar.js','./customer-addresses.js','./customer-system-notify.js','./customer-polish.js','./customer-ux.js','./customer-push.js','./customer-lux.js','./customer-home-v2.js',
   './manifest.webmanifest','./assets/brand/mark.svg','./assets/brand/hero.svg',
   './assets/services/taxi.svg','./assets/services/private.svg','./assets/services/delivery.svg','./assets/services/cargo.svg','./assets/services/intercity.svg'
 ];
