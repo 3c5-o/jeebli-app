@@ -3,6 +3,7 @@
   const load=src=>{if(document.querySelector(`script[src="${src}"]`))return;const s=document.createElement('script');s.src=src;s.async=false;document.body.appendChild(s)};
   load('./customer-avatar.js');
   load('./customer-addresses.js');
+  load('./customer-system-notify.js');
   const params=new URLSearchParams(location.search),action=params.get('action');
   if(!action)return;
   const run=()=>{
