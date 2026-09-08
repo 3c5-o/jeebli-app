@@ -1,5 +1,5 @@
 (()=>{
-  const SERVICE_LABELS={taxi:'تكسي',private:'خصوصي',delivery:'دليفري / توصيل',cargo:'حمل',intercity:'بين المحافظات'};
+  const SERVICE_LABELS={taxi:'تكسي',private:'خصوصي',delivery:'دليفري / توصيل',cargo:'حمل',starex:'ستاركس',intercity:'بين المحافظات'};
   const ready=fn=>document.readyState==='loading'?document.addEventListener('DOMContentLoaded',fn,{once:true}):fn();
 
   ready(async()=>{
@@ -20,7 +20,7 @@
     let serviceSelect=document.getElementById('driverServiceType');
     if(!serviceSelect){
       const label=document.createElement('label');
-      label.innerHTML='<span>قسم السائق</span><select id="driverServiceType" required><option value="taxi">تكسي</option><option value="private">خصوصي</option><option value="delivery">دليفري / توصيل</option><option value="cargo">حمل</option><option value="intercity">بين المحافظات</option></select>';
+      label.innerHTML='<span>قسم السائق</span><select id="driverServiceType" required><option value="taxi">تكسي</option><option value="private">خصوصي</option><option value="delivery">دليفري / توصيل</option><option value="cargo">حمل</option><option value="starex">ستاركس</option><option value="intercity">بين المحافظات</option></select>';
       form.insertBefore(label,vehicleLabel||form.firstChild);
       serviceSelect=label.querySelector('select');
     }
