@@ -13,9 +13,10 @@
   "lang": "ar-IQ",
   "dir": "rtl",
   "categories": ["travel", "navigation", "utilities"],
+  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "./assets/brand/mark.svg",
+      "src": "./assets/brand/app-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
@@ -34,7 +35,7 @@
       "short_name": "طلباتي",
       "description": "عرض الطلبات الحالية والسابقة",
       "url": "./?action=requests",
-      "icons": [{"src":"./assets/brand/mark.svg","sizes":"any","type":"image/svg+xml"}]
+      "icons": [{"src":"./assets/brand/app-icon.svg","sizes":"any","type":"image/svg+xml"}]
     }
   ]
 }
