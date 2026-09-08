@@ -1,7 +1,7 @@
-const CACHE='jeebli-customer-v8';
+const CACHE='jeebli-customer-v9';
 const CORE=[
   './','./index.html','./styles.css','./brand.css','./customer-v2.css','./customer-v3.css','./customer-services.css',
-  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js',
+  './config.js','./app.js','./tracking.js','./brand.js','./customer-areas.js','./customer-v2.js','./customer-v3.js','./customer-v3-bridge.js','./customer-services.js','./customer-launch.js',
   './manifest.webmanifest','./assets/brand/mark.svg','./assets/brand/hero.svg',
   './assets/services/taxi.svg','./assets/services/private.svg','./assets/services/delivery.svg','./assets/services/cargo.svg','./assets/services/intercity.svg'
 ];
