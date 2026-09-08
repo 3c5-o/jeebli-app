@@ -34,7 +34,8 @@
       if(existing){if(onload)existing.addEventListener('load',onload,{once:true});return existing}
       const s=document.createElement('script');s.src=src;s.async=false;if(onload)s.addEventListener('load',onload,{once:true});document.body.appendChild(s);return s;
     };
-    const loadServiceImages=()=>loadScript('./customer-service-images.js');
+    const loadMobileFixes=()=>loadScript('./customer-mobile-fixes.js');
+    const loadServiceImages=()=>loadScript('./customer-service-images.js',loadMobileFixes);
     const loadHomeV2=()=>loadScript('./customer-home-v2.js',loadServiceImages);
     const loadLux=()=>loadScript('./customer-lux.js',loadHomeV2);
     const loadPush=()=>loadScript('./customer-push.js',loadLux);
@@ -62,6 +63,7 @@
       if(!document.querySelector('script[src="./customer-lux.js"]'))loadLux();
       if(!document.querySelector('script[src="./customer-home-v2.js"]'))loadHomeV2();
       if(!document.querySelector('script[src="./customer-service-images.js"]'))loadServiceImages();
+      if(!document.querySelector('script[src="./customer-mobile-fixes.js"]'))loadMobileFixes();
     },1800);
   });
 })();
