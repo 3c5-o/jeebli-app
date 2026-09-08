@@ -28,6 +28,8 @@
 
     async function start(u){
       user=u;
+      const intro=document.querySelector('#jNotifPrefs>p');
+      if(intro)intro.textContent='اختر شنو تريد يصلك. Push الحقيقي يوصلك على هذا الجهاز حتى إذا جيبلي مو مفتوح.';
       paint();
       if(supported()&&Notification.permission==='granted')await enablePush(false);
     }
