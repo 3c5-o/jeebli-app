@@ -47,6 +47,7 @@ jobs:
           node --check customer-ux.js
           node --check customer-push.js
           node --check customer-lux.js
+          node --check customer-home-v2.js
           node --check sw.js
           node --check brand.js
           node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8')); console.log('manifest ok')"
